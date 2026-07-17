@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="CoffeeCup HTML Editor (www.coffeecup.com)">
+    <meta name="dcterms.created" content="Tue, 13 Mar 2018 06:36:37 GMT">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <title></title>
+    
+    <!--[if IE]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+<body>
+    <form action="" method="post">
+        <label for="required_later">Required if Option2 selected</label>
+        <input type="text" name="text_input_field" id="required_later" disabled><br>
+
+        <input type="radio" id="option1" name="radio_options" value="option1">
+        <label for="option1">Option1</label><br>
+
+        <input type="radio" id="option2" name="radio_options" value="option2">
+        <label for="option2">Option2</label><br>
+        <input type="submit" name="submit" value="Submit">
+    </form>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script>
+        $("#option1").click(function() {
+            $("#required_later").prop("required", false);
+            $("#required_later").prop("disabled", true);
+        });
+        $("#option2").click(function() {
+            $("#required_later").prop("required", true);
+            $("#required_later").prop("disabled", false);
+            $("#required_later").focus();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,3 @@
+SELECT * FROM kota INNER JOIN provinsi ON kota.id_provinsi_fk = provinsi.id_provinsi ORDER BY nama_kota
+
+SELECT * ROM bagian INNER JOIN pekerjaan ON bagian.id_bagian_fk = pekerjaan.id_pekerjaan ORDER BY nama_bagian

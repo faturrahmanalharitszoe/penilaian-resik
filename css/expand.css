@@ -1,0 +1,17 @@
+#list {
+      display: none;
+    }
+    
+#list.open {
+      display: block;  
+    }
+
+#list1 {
+      display: none;
+    }
+    
+#list1.open {
+      display: block;  
+    }    
+
+@media print { .hide, .show { display: none; } }

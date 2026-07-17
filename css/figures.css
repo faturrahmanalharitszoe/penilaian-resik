@@ -1,0 +1,26 @@
+.preview001:hover img {
+  opacity: 0.35;
+}
+.preview001:hover > div i {
+  opacity: 0.9;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+  -webkit-transition-delay: 0.3s;
+  transition-delay: 0.3s;
+}
+.preview001:hover > div i.left-icon {
+  -webkit-transform: translate3d(-25%, -50%, 0);
+  transform: translate3d(-25%, -50%, 0);
+}
+.preview001:hover > div i.right-icon {
+  -webkit-transform: translate3d(25%, -50%, 0);
+  transform: translate3d(25%, -50%, 0);
+}
+.preview001:hover > div::before {
+  background: rgba(255, 255, 255, 0);
+  left: 30px;
+  right: 30px;
+  opacity: 1;
+  -webkit-transition-delay: 0s;
+  transition-delay: 0s;
+}

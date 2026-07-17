@@ -1,0 +1,358 @@
+body {
+  background-image: url('../images/background-putih.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: 'Noto Sans', sans-serif;
+  padding-bottom: 0;
+}
+
+.splashscreen{
+  background-image: url('../images/background-biru.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.homeLogo{
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  top: 30px;
+}
+
+.homeLogo img {
+  width: 850px;
+}
+
+hr.kotakputih {
+  border: 2px solid white;
+  border-radius: 5px;
+  width: 10%;
+}
+
+.textHome {
+  margin: 0 auto;
+  text-align: center;
+  color: white;
+  font-size: 25px;
+}
+
+.enterHome{
+  text-align: center;
+}
+
+.btn-enter{
+  background-color: #24A5EA;
+  border-radius: 30px;
+  width: 200px;
+}
+
+.resiknav{
+  background-color: #1063AA;
+}
+
+.navbar-brand img {
+  width: 180px;
+}
+
+.navbar-expand-lg .navbar-collapse{
+  justify-content: flex-end;
+}
+
+navbar-nav a.nav-link{
+  color: #fff;
+}
+
+.resiknav a.nav-link:visited{
+  color: #fff;
+}
+
+.navbar-nav{
+  padding-top:20px;
+  justify-content: space-between;
+}
+
+.nav-item{
+  margin-right: 40px;
+}
+
+/* Thick red border */
+hr.biru {
+  border: 1px solid #148CCC;
+  width: 15%;
+  margin-left: 0;
+  margin-top: 0;
+}
+
+hr.biru-tengah {
+  border: 1px solid #148CCC;
+  width: 15%;
+
+}
+
+#about p {
+  font-size: 14px;
+}
+
+.btn-resik{
+  background-color: #24A5EA;
+  border-radius: 30px;
+  border-color: #24A5EA;
+}
+
+#services{
+  background-color: rgba(101, 101, 101,.1);
+}
+
+.about-lighter {
+  background-color: rgba(101, 101, 101,.1);
+}
+
+.service-text {
+  font-size: 13px;
+  color: #4E4E4E;
+}
+
+.service-title{
+  font-weight: bold;
+  color: #0084CB;
+}
+
+footer{
+  background-color: #116BA3;
+}
+
+
+
+footer img {
+  width: 200px;
+}
+
+footer h4, footer p {
+  color: white;
+}
+
+footer p {
+  font-size: 12px;
+}
+
+.footer-line{
+  border: 1px solid white;
+  width: 40%;
+  margin-left: 0;
+}
+
+.about-text{
+  font-size: 14px;
+}
+
+.hide-mobile{
+  display: block;
+}
+
+#logo img{
+  width: 150px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.language-box {
+  position: absolute;
+  top: 8px;
+  right: 15px;
+  font-size: 12px;
+}
+
+.language-box a {
+  color: white;
+}
+
+.language-box  a.language-active{
+  color: black;
+}
+
+.sertifikasi-text{
+  font-size: 12px;
+}
+
+.first-sertifikasi{
+    padding-bottom: 40px;
+}
+
+.form-header{
+  min-height: 70px;
+  padding: 20px;
+  border-radius: 33px 33px 0 0;
+  border: 1px solid #707070;
+  background: #2878AA;
+}
+
+ .form-content{
+   background: #fff;
+   padding: 20px;
+   border: 1px solid #707070;
+ }
+
+ .btn-resik{
+   background: #2878AA;
+   color: white;
+ }
+
+ .gj-datepicker-md [role="right-icon"] {
+     position: absolute;
+     right: 0px;
+     top: 8px;
+     font-size: 24px;
+ }
+
+ a {
+   text-decoration: none;
+ }
+
+ a:hover{
+   text-decoration: none;
+ }
+
+ #service-category a {
+   font-size: 14px;
+ }
+
+ #myBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: #1063AA;
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+#myBtn:hover {
+  background-color: #555;
+}
+
+footer p.address{
+  font-size: 16px;
+}
+
+ hr.biru-tengah.tambah{
+  width: 45%;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .first-sertifikasi {
+    padding-bottom: 40px;
+  }
+}
+
+@media screen and (device-width: 360px) and (device-height: 640px) and (-webkit-device-pixel-ratio: 3){
+/*Galaxy S5*/
+
+  .splashscreen{
+    background-image: url('../images/background-biru.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 2000px;
+  }
+
+  .splashscreen .container{
+    margin-top: 50%;
+
+  }
+
+  .buttonBox{
+    text-align: center;
+  }
+
+}
+  .navbar-brand{
+    /*margin: 0 auto;*/
+  }
+
+  footer{
+    text-align: center;
+  }
+
+  .footer-line{
+    margin-left: 40%;
+    width: 20%;
+
+  }
+
+  h2, .h2{
+    font-size: 25px;
+  }
+
+
+
+
+
+
+
+
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px)
+and (-webkit-device-pixel-ratio: 2) and (device-aspect-ratio: 40/71)
+{
+   /*Iphone 5*/
+   .splashscreen{
+     background-image: url('../images/background-biru.svg');
+     background-size: cover;
+     background-repeat: no-repeat;
+     height: 2000px;
+   }
+
+   .splashscreen .container{
+     margin-top: 50%;
+
+   }
+
+   .buttonBox{
+     text-align: center;
+   }
+
+   #logoFooter{
+     text-align: center;
+   }
+
+   h2, .h2{
+     font-size:25px;
+   }
+
+
+
+}
+
+@media only screen
+and (min-device-width : 375px)
+and (max-device-width : 667px) {
+/* Iphone 6 / 7 */
+
+.splashscreen{
+  background-image: url('../images/background-biru.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 2000px;
+}
+
+.splashscreen .container{
+  margin-top: 50%;
+
+}
+
+.buttonBox{
+  text-align: center;
+}
+
+h2, .h2{
+  font-size: 30px;
+}
+
+}

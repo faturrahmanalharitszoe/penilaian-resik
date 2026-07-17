@@ -1,0 +1,5 @@
+		?>							<script>
+							 var no_ktp = "<?php echo $no_ktp ?>";
+							 window.location="report.php?ktp="+no_ktp;
+							</script>
+							<?php

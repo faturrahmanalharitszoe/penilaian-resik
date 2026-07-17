@@ -1,0 +1,7 @@
+html{overflow-y:scroll;overflow-x:hidden;}
+body{animation: fadeIn 1s}
+@keyframes fadeIn{
+    0%{opacity:0;background:#000}
+    90%{opacity:0}
+    100%{opacity:1;background:#fff}
+}

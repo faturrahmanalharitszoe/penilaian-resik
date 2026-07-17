@@ -1,0 +1,393 @@
+<?php
+include "koneksi.php";
+require('pdf/fpdf.php');
+date_default_timezone_set("Asia/Bangkok");
+$tgl = date("d-m-Y H:i:s");
+$month = date('m');
+$year = date('Y');
+if($month < 8 && $month > 1)
+{
+    $periode = 'Jan - Jun '.$year;
+}
+else
+{
+ 	$periode = 'Jul - Des '.$year;
+}
+ob_clean();
+$nama=$_GET['nama'];
+if (isset($_GET['email']))
+{ 
+   $email = $_GET['email'];
+   $result = mysqli_query($koneksi,"SELECT * FROM penilaian where karyawan = '$nama'");
+   $dcek=mysqli_fetch_array($result);
+   $dtgl=$dcek['tgl'];       // tgl penilaian
+   $did=$dcek['id'];         // id penilaian  
+   $karyawan=$dcek['karyawan'];    // nama karyawan
+   $qdivisi=mysqli_query($koneksi,"select * from karyawan where nama = '$nama'");
+   $ddivisi=mysqli_fetch_array($qdivisi);
+   $divisi=$ddivisi['divisi'];
+   $nik=$ddivisi['nik'];
+   $jabatan=$dcek['jabatan'];
+   $penilai=$dcek['penilai'];
+   $nilai1=$dcek['nilai1'];
+   $nilai2=$dcek['nilai2'];
+   $nilai3=$dcek['nilai3'];
+   $nilai4=$dcek['nilai4'];
+   $nilai5=$dcek['nilai5'];
+   $nilai6=$dcek['nilai6'];
+   $nilai7=$dcek['nilai7'];
+   $nilai8=$dcek['nilai8'];
+   $nilai9=$dcek['nilai9'];
+   $nilai10=$dcek['nilai10'];
+   $nilai11=$dcek['nilai11'];
+   $nilai12=$dcek['nilai12'];
+   $nilai13=$dcek['nilai13'];
+   $nilai14=$dcek['nilai14'];
+   $nilai15=$dcek['nilai15'];
+   $nilai16=$dcek['nilai16'];
+   $nilai17=$dcek['nilai17'];
+   $nilai18=$dcek['nilai18'];
+   $nilai19=$dcek['nilai19'];
+   
+   $hasil1=$dcek['hasil1'];
+   $hasil2=$dcek['hasil2'];
+   $hasil3=$dcek['hasil3'];
+   $hasil4=$dcek['hasil4'];
+   $hasil5=$dcek['hasil5'];
+   $hasil6=$dcek['hasil6'];
+   $hasil7=$dcek['hasil7'];
+   $hasil8=$dcek['hasil8'];
+   $hasil9=$dcek['hasil9'];
+   $hasil10=$dcek['hasil10'];
+   $hasil11=$dcek['hasil11'];
+   $hasil12=$dcek['hasil12'];
+   $hasil13=$dcek['hasil13'];
+   $hasil14=$dcek['hasil14'];
+   $hasil15=$dcek['hasil15'];
+   $hasil16=$dcek['hasil16'];
+   $hasil17=$dcek['hasil17'];
+   $hasil18=$dcek['hasil18'];
+   $hasil19=$dcek['hasil19'];
+   if($dcek['hasil1'] > 0)
+   { 
+	  $akhir1=round(($nilai1+$hasil1)/2,2);
+	  $akhir2=round(($nilai2+$hasil2)/2,2);
+	  $akhir3=round(($nilai3+$hasil3)/2,2);
+	  $akhir4=round(($nilai4+$hasil4)/2,2);
+	  $akhir5=round(($nilai5+$hasil5)/2,2);
+	  $akhir6=round(($nilai6+$hasil6)/2,2);
+	  $akhir7=round(($nilai7+$hasil7)/2,2);
+	  $akhir8=round(($nilai8+$hasil8)/2,2);
+	  $akhir9=round(($nilai9+$hasil9)/2,2);
+	  $akhir10=round(($nilai10+$hasil10)/2,2);
+	  $akhir11=round(($nilai11+$hasil11)/2,2);
+	  $akhir12=round(($nilai12+$hasil12)/2,2);
+	  $akhir13=round(($nilai13+$hasil13)/2,2);
+	  $akhir14=round(($nilai14+$hasil14)/2,2);
+	  $akhir15=round(($nilai15+$hasil15)/2,2);
+	  $akhir16=round(($nilai16+$hasil16)/2,2);
+	  $akhir17=round(($nilai17+$hasil17)/2,2);
+    $akhir18=round(($nilai18+$hasil18)/2,2);
+	  $akhir19=round(($nilai19+$hasil19)/2,2);
+   }
+   else
+   {
+   	  $akhir1 = $nilai1;  
+	  $akhir2 = $nilai2;
+	  $akhir3 = $nilai3;
+	  $akhir4 = $nilai4;
+	  $akhir5 = $nilai5;
+	  $akhir6 = $nilai6;
+	  $akhir7 = $nilai7;
+	  $akhir8 = $nilai8;
+	  $akhir9 = $nilai9;
+	  $akhir10 = $nilai10;
+	  $akhir11 = $nilai11;
+	  $akhir12 = $nilai12;
+	  $akhir13 = $nilai13;
+	  $akhir14 = $nilai14;
+	  $akhir15 = $nilai15;
+	  $akhir16 = $nilai16;
+	  $akhir17 = $nilai17;
+    $akhir18 = $nilai18;
+	  $akhir19 = $nilai19;
+   }	
+   
+   $total1=$nilai1+$nilai2+$nilai3+$nilai4+$nilai5+$nilai6+$nilai7+$nilai8+$nilai9+$nilai10+$nilai11+$nilai12+$nilai13+$nilai14+$nilai15+$nilai16+$nilai17+$nilai18+$nilai19;
+   $rata1=round($total1/19,2);
+   if($hasil1 > 0)
+   {
+   	   $total2=$hasil1+$hasil2+$hasil3+$hasil4+$hasil5+$hasil6+$hasil7+$hasil8+$hasil9+$hasil10+$hasil11+$hasil12+$hasil13+$hasil14+$hasil15+$hasil16+$hasil17+$nilai18+$nilai19;
+	   $total3=$akhir1+$akhir2+$akhir3+$akhir4+$akhir5+$akhir6+$akhir7+$akhir8+$akhir9+$akhir10+$akhir11+$akhir12+$akhir13+$akhir14+$akhir15+$akhir16+$akhir17+$nilai18+$nilai19;
+	   $rata2=round($total2/19,2);
+   	   $rata3=round($total3/19,2);
+   }	   
+   else
+   {
+       $total2 = 0;
+	   $total3 = $total1;
+	   $rata2 = 0;
+	   $rata3 = $rata1;
+   }
+   $catatan1=$dcek['catatan1'];
+   $catatan2=$dcek['catatan2'];
+   $catatan3=$dcek['catatan3'];
+   $catatan4=$dcek['catatan4'];
+   $tgl=date("d-M-Y", strtotime($dtgl));
+   $pdf = new FPDF("P","cm","A4");
+   $pdf->SetMargins(1,0.5,1);
+   $pdf->AliasNbPages();
+   $pdf->AddPage();
+   $pdf->SetFont('Times','B',11);
+   $pdf->MultiCell(19.5,0.5,'',0,'L'); 
+   $pdf->SetX(4);   
+   $pdf->SetFont('Arial','B',12);
+   $pdf->SetX(1);
+   $pdf->Cell(3.5,1.8, '', 1, 0, 'C');
+   $pdf->Image('images/logo.png',1.1,1.1,3.3,1.5);
+   $pdf->SetX(4.5);
+   $pdf->Cell(7, 0.6, 'SISTEM MANAJEMEN MUTU', 'LTR', 0, 'C');
+   $pdf->SetFont('Arial','',10);
+   $pdf->Cell(8.3, 0.6, 'F-RC-SDM-10', 'LTR', 1, 'C');
+   $pdf->SetX(4.5);
+   $pdf->SetFont('Arial','B',12);
+   $pdf->Cell(7, 0.6, 'PT RESIK CEMERLANG', 'LBR', 0, 'C');
+   $pdf->SetFont('Arial','',10);
+   $pdf->Cell(8.3, 0.6, 'FORM EVALUASI PENILAIAN KINERJA', 'LBR', 1, 'C');
+   $pdf->SetX(4.5);
+   $pdf->Cell(4, 0.6, 'Halaman    : 1 dari 2', 'LB', 0, 'L');
+   $pdf->Cell(3, 0.6, 'Revisi : 01', 'LBR', 0, 'C');
+   $pdf->Cell(8.3, 0.6, 'Tanggal : 1 Juli 2022', 'LBR', 1, 'C');
+   $pdf->SetX(1);
+   $pdf->SetFont('Arial','B',12);
+   $pdf->Cell(18.8, 0.6, 'FORMULIR PENILAIAN KINERJA', 'LBR', 1, 'C');
+   $pdf->SetFont('Arial','',10);
+   $pdf->SetX(1);
+   $pdf->Cell(18.8, 0.2, '', 'LR', 1, 'L');
+   $pdf->SetX(1);
+   $pdf->Cell(2.3, 0.6, 'Divisi', 'L', 0, 'L');
+   $pdf->Cell(7.7, 0.6, ': '.$divisi, 0, 0, 'L');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.3, 0.6, 'Masa Kerja', 0, 0, 'L');
+   $pdf->Cell(6, 0.6, ': ................', 'R', 1, 'L');
+   $pdf->SetX(1);
+   $pdf->Cell(2.3, 0.6, 'Nama / NIK', 'L', 0, 'L');
+   $txt_nama = ': '.$karyawan.' / '.$nik;
+$x_nama = $pdf->GetX();
+$y_nama = $pdf->GetY();
+if ($pdf->GetStringWidth($txt_nama) > 7.6) {
+    $pdf->MultiCell(7.7, 0.3, $txt_nama, 0, 'L');
+    $pdf->SetXY($x_nama + 7.7, $y_nama);
+} else {
+    $pdf->Cell(7.7, 0.6, $txt_nama, 0, 0, 'L');
+}
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.3, 0.6, 'Gol/Jabatan', 0, 0, 'L');
+   $pdf->Cell(6.2, 0.6, ': '.$jabatan, 'R', 1, 'L');
+   $pdf->Cell(2.3, 0.6, 'Pendidikan', 'L', 0, 'L');
+   $pdf->Cell(7.7, 0.6, ': ................', 0, 0, 'L');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.3, 0.6, 'Periode', 0, 0, 'L');
+   $pdf->Cell(6.2, 0.6, ': '.$periode, 'R', 1, 'L');
+   $pdf->Cell(18.8, 0.1, '', 'LR', 1, 'L');
+   $pdf->Line(1,5.4,19.8,5.4);
+   $pdf->SetLineWidth(0);      
+   $pdf->Line(1,5.47,19.8,5.47);   
+   $pdf->SetLineWidth(0);
+   $pdf->SetFont('Arial','B',12);
+   $pdf->Cell(1.2, 1.2, 'NO', 'LBR', 0, 'C');  
+   $pdf->Cell(9.3, 1.2, 'ASPEK PENILAIAN', 'LBR', 0, 'C');
+   $pdf->SetFont('Arial','',10);
+   $pdf->Cell(8.3, 0.6, 'SKOR PENILAIAN', 'LBR', 1, 'C');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.76, 0.6, 'NILAI I', 'LBR', 0, 'C');
+   $pdf->Cell(2.76, 0.6, 'NILAI II', 'LBR', 0, 'C');
+   $pdf->Cell(2.77, 0.6, 'NILAI AKHIR', 'LBR', 1, 'C');
+   $pdf->Line(1,6.76,19.8,6.76);
+   $pdf->SetLineWidth(0);      
+   $pdf->SetX(1);
+   $pdf->SetFont('Arial','B',10);
+   $pdf->Cell(18.8, 0.6, 'A. ASPEK TEKNIS PEKERJAAN', 'LBR', 1, 'L');
+   $pdf->SetFont('Arial','',10);
+   $pdf->Cell(1.2, 0.53, '1', 'LBR', 0, 'C'); 
+   $pdf->Cell(9.3, 0.53, 'Efektifitas & Efisiensi Kerja ', 'LBR', 0, 'L');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.76, 0.53, $nilai1, 'LBR', 0, 'C');
+   $pdf->Cell(2.76, 0.53, $hasil1, 'LBR', 0, 'C');
+   $pdf->Cell(2.77, 0.53, $akhir1, 'LBR', 1, 'C');
+   $pdf->Cell(1.2, 0.53, '2', 'LBR', 0, 'C'); 
+   $pdf->Cell(9.3, 0.53, 'Ketepatan waktu dalam mengerjakan tugas (Reporting) ', 'LBR', 0, 'L');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.76, 0.53, $nilai2, 'LBR', 0, 'C');
+   $pdf->Cell(2.76, 0.53, $hasil2, 'LBR', 0, 'C');
+   $pdf->Cell(2.77, 0.53, $akhir2, 'LBR', 1, 'C');
+   $pdf->Cell(1.2, 0.53, '3', 'LBR', 0, 'C'); 
+   $pdf->Cell(9.3, 0.53, 'Memiliki Skill/kemampuan yang memadai pada bidangnya', 'LBR', 0, 'L');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.76, 0.53, $nilai3, 'LBR', 0, 'C');
+   $pdf->Cell(2.76, 0.53, $hasil3, 'LBR', 0, 'C');
+   $pdf->Cell(2.77, 0.53, $akhir3, 'LBR', 1, 'C');
+   $pdf->Cell(1.2, 0.53, '4', 'LBR', 0, 'C'); 
+   $pdf->Cell(9.3, 0.53, 'Kemampuan mencapai target/ standar Perusahaan', 'LBR', 0, 'L');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.76, 0.53, $nilai4, 'LBR', 0, 'C');
+   $pdf->Cell(2.76, 0.53, $hasil4, 'LBR', 0, 'C');
+   $pdf->Cell(2.77, 0.53, $akhir4, 'LBR', 1, 'C');
+   $pdf->Cell(1.2, 0.53, '5', 'LBR', 0, 'C'); 
+   $pdf->Cell(9.3, 0.53, 'Merealisasikan Pekerjaan Sesuai Job Desc', 'LBR', 0, 'L');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.76, 0.53, $nilai5, 'LBR', 0, 'C');
+   $pdf->Cell(2.76, 0.53, $hasil5, 'LBR', 0, 'C');
+   $pdf->Cell(2.77, 0.53, $akhir5, 'LBR', 1, 'C');
+   $pdf->Cell(1.2, 0.53, '6', 'LBR', 0, 'C'); 
+   $pdf->Cell(9.3, 0.53, 'Responsif dalam komunikasi (Email, WhatsApp, Telepon)', 'LBR', 0, 'L');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.76, 0.53, $nilai6, 'LBR', 0, 'C');
+   $pdf->Cell(2.76, 0.53, $hasil6, 'LBR', 0, 'C');
+   $pdf->Cell(2.77, 0.53, $akhir6, 'LBR', 1, 'C');
+   $pdf->Cell(1.2, 0.53, '7', 'LBR', 0, 'C'); 
+   $pdf->Cell(9.3, 0.53, 'Teliti dan cermat dalam menyelesaikan pekerjaan', 'LBR', 0, 'L');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.76, 0.53, $nilai7, 'LBR', 0, 'C');
+   $pdf->Cell(2.76, 0.53, $hasil7, 'LBR', 0, 'C');
+   $pdf->Cell(2.77, 0.53, $akhir7, 'LBR', 1, 'C');
+   $pdf->Cell(1.2, 0.53, '8', 'LBR', 0, 'C'); 
+   $pdf->Cell(9.3, 0.53, 'Tertib Administrasi', 'LBR', 0, 'L');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.76, 0.53, $nilai8, 'LBR', 0, 'C');
+   $pdf->Cell(2.76, 0.53, $hasil8, 'LBR', 0, 'C');
+   $pdf->Cell(2.77, 0.53, $akhir8, 'LBR', 1, 'C');
+   $pdf->Cell(18.8, 0.53, 'CATATAN :', 'LR', 1, 'L');
+   $pdf->Cell(18.8, 0.53, substr($catatan1,0,94), 'LR', 1, 'L');
+   $pdf->Cell(18.8, 0.53, substr($catatan1,94,190), 'LR', 1, 'L');
+
+   $pdf->SetFont('Arial','B',10);
+   $pdf->Cell(18.8, 0.6, 'B. ASPEK NON TEKNIS', 1, 1, 'L');
+   $pdf->SetFont('Arial','',10);
+   $pdf->Cell(1.2, 0.535, '1', 'LBR', 0, 'C'); 
+   $pdf->Cell(9.3, 0.53, 'Inisiatif ', 'LBR', 0, 'L');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.76, 0.53, $nilai9, 'LBR', 0, 'C');
+   $pdf->Cell(2.76, 0.53, $hasil9, 'LBR', 0, 'C');
+   $pdf->Cell(2.77, 0.53, $akhir9, 'LBR', 1, 'C');
+   $pdf->Cell(1.2, 0.53, '2', 'LBR', 0, 'C'); 
+   $pdf->Cell(9.3, 0.53, 'Integritas', 'LBR', 0, 'L');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.76, 0.53, $nilai10, 'LBR', 0, 'C');
+   $pdf->Cell(2.76, 0.53, $hasil10, 'LBR', 0, 'C');
+   $pdf->Cell(2.77, 0.53, $akhir10, 'LBR', 1, 'C');
+   $pdf->Cell(1.2, 0.53, '3', 'LBR', 0, 'C'); 
+   $pdf->Cell(9.3, 0.53, 'Kerjasama & Koordinasi antar bagian', 'LBR', 0, 'L');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.76, 0.53, $nilai11, 'LBR', 0, 'C');
+   $pdf->Cell(2.76, 0.53, $hasil11, 'LBR', 0, 'C');
+   $pdf->Cell(2.76, 0.53, $akhir11, 'LBR', 1, 'C');
+   $pdf->Cell(1.2, 0.53, '4', 'LBR', 0, 'C'); 
+   $pdf->Cell(9.3, 0.53, 'Tanggung Jawab & Loyalitas', 'LBR', 0, 'L');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.76, 0.53, $nilai12, 'LBR', 0, 'C');
+   $pdf->Cell(2.76, 0.53, $hasil12, 'LBR', 0, 'C');
+   $pdf->Cell(2.77, 0.53, $akhir12, 'LBR', 1, 'C');
+   $pdf->Cell(1.2, 0.53, '5', 'LBR', 0, 'C'); 
+   $pdf->Cell(9.3, 0.53, 'Perilaku dan Sikap', 'LBR', 0, 'L');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.76, 0.53, $nilai13, 'LBR', 0, 'C');
+   $pdf->Cell(2.76, 0.53, $hasil13, 'LBR', 0, 'C');
+   $pdf->Cell(2.77, 0.53, $akhir13, 'LBR', 1, 'C');
+   $pdf->Cell(1.2, 0.53, '6', 'LBR', 0, 'C'); 
+   $pdf->Cell(9.3, 0.53, 'Akuntabilitas', 'LBR', 0, 'L');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.76, 0.53, $nilai14, 'LBR', 0, 'C');
+   $pdf->Cell(2.76, 0.53, $hasil14, 'LBR', 0, 'C');
+   $pdf->Cell(2.77, 0.53, $akhir14, 'LBR', 1, 'C');
+   $pdf->Cell(1.2, 0.53, '7', 'LBR', 0, 'C'); 
+   $pdf->Cell(9.3, 0.53, 'Kedisiplinan', 'LBR', 0, 'L');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.76, 0.53, $nilai15, 'LBR', 0, 'C');
+   $pdf->Cell(2.76, 0.53, $hasil15, 'LBR', 0, 'C');
+   $pdf->Cell(2.77, 0.53, $akhir15, 'LBR', 1, 'C');
+   $pdf->Cell(18.8, 0.53, 'CATATAN :', 'LR', 1, 'L');
+   $pdf->Cell(18.8, 0.53, substr($catatan2,0,100), 'LR', 1, 'L');
+   $pdf->Cell(18.8, 0.53, substr($catatan2,101,200), 'LR', 1, 'L');
+
+   $pdf->SetFont('Arial','B',10);
+   $pdf->Cell(18.8, 0.6, 'C. ASPEK KEPEMIMPINAN', 1, 1, 'L');
+   $pdf->SetFont('Arial','',10);
+   $pdf->Cell(1.2, 0.53, '1', 'LBR', 0, 'C'); 
+   $pdf->Cell(9.3, 0.53, 'Koordinasi anggota dan Kontrol anggota', 'LBR', 0, 'L');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.76, 0.53, $nilai16, 'LBR', 0, 'C');
+   $pdf->Cell(2.76, 0.53, $hasil16, 'LBR', 0, 'C');
+   $pdf->Cell(2.77, 0.53, $akhir16, 'LBR', 1, 'C');
+   $pdf->Cell(1.2, 0.53, '2', 'LBR', 0, 'C'); 
+   $pdf->Cell(9.3, 0.53, 'Ketepatan dan Kecepatan dalam Pengambilan Keputusan', 'LBR', 0, 'L');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.76, 0.53, $nilai17, 'LBR', 0, 'C');
+   $pdf->Cell(2.76, 0.53, $hasil17, 'LBR', 0, 'C');
+   $pdf->Cell(2.77, 0.53, $akhir17, 'LBR', 1, 'C');
+   $pdf->Cell(1.2, 0.53, '3', 'LBR', 0, 'C'); 
+   $pdf->Cell(9.3, 0.53, 'Evaluasi dan pembinaan anggota', 'LBR', 0, 'L');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.76, 0.53, $nilai18, 'LBR', 0, 'C');
+   $pdf->Cell(2.76, 0.53, $hasil18, 'LBR', 0, 'C');
+   $pdf->Cell(2.77, 0.53, $akhir18, 'LBR', 1, 'C');
+   $pdf->Cell(1.2, 0.53, '4', 'LBR', 0, 'C'); 
+   $pdf->Cell(9.3, 0.53, 'Delegasi tanggung jawab dan wewenang', 'LBR', 0, 'L');
+   $pdf->SetX(11.5);
+   $pdf->Cell(2.76, 0.53, $nilai19, 'LBR', 0, 'C');
+   $pdf->Cell(2.76, 0.53, $hasil19, 'LBR', 0, 'C');
+   $pdf->Cell(2.77, 0.53, $akhir19, 'LBR', 1, 'C');
+
+   $pdf->Cell(18.8, 0.53, 'CATATAN TAMBAHAN :', 'LR', 1, 'L');
+   if(!isset($catatan41) || $catatan41 == '')
+   {
+        $pdf->Cell(18.8, 0.53, substr($catatan4,0,100), 'LR', 1, 'L');
+        $pdf->Cell(18.8, 0.53, substr($catatan4,101,200), 'LR', 1, 'L');
+   }
+   else
+   {
+        $pdf->Cell(18.8, 0.53, '1. '.substr($catatan4,0,94), 'LR', 1, 'L');
+        $pdf->Cell(18.8, 0.53, '2. '.substr($catatan41,0,94), 'LR', 1, 'L');
+   }
+   $pdf->Cell(18.8, 0.53, 'CATATAN APPROVAL :', 'LR', 1, 'L');
+   $pdf->Cell(18.8, 0.53, substr($catatan3,0,100), 'LR', 1, 'L');
+   $pdf->Cell(18.8, 0.53, substr($catatan3,101,200), 'LR', 1, 'L');
+
+   $pdf->Cell(10.5, 0.53, 'Total Nilai', 1, 0, 'C');
+   $pdf->Cell(2.76, 0.53, $total1, 1, 0, 'C');
+   $pdf->Cell(2.76, 0.53, $total2, 1, 0, 'C');
+   $pdf->Cell(2.77, 0.53, $total3, 1, 1, 'C');
+   $pdf->Cell(10.5, 0.53, 'Rata - rata Nilai', 1, 0, 'C');
+   $pdf->Cell(2.76, 0.53, $rata1, 1, 0, 'C');
+   $pdf->Cell(2.76, 0.53, $rata2, 1, 0, 'C');
+   $pdf->Cell(2.77, 0.53, $rata3, 1, 1, 'C');
+   $pdf->Cell(18.8, 0.53, 'CATATAN (Direktur Utama/Wakil Direktur Utama) :', 'LR', 0, 'L');
+   $pdf->Cell(18.8, 0.53, '', 'LR', 1, 'L');
+   $pdf->Cell(18.8, 0.53, '', 'LR', 1, 'L');
+   $pdf->Cell(18.8, 0.53, '', 'LR', 1, 'L');
+   $pdf->Cell(4.7, 0.53, 'Dibuat Oleh', 1, 0, 'C');
+   $pdf->Cell(9.4, 0.53, 'Diketahui Oleh', 1, 0, 'C');
+   $pdf->Cell(4.7, 0.53, 'Disetujui Oleh', 1, 1, 'C');
+   $pdf->Cell(4.7, 1.5, '', 'LR', 0, 'L');
+   $pdf->Cell(4.7, 1.5, '', 'LR', 0, 'L');
+   $pdf->Cell(4.7, 1.5, '', 'LR', 0, 'L');
+   $pdf->Cell(4.7, 1.5, '', 'LR', 1, 'L');
+   $pdf->Cell(4.7, 0.53, $penilai, 1, 0, 'C');
+   $pdf->Cell(4.7, 0.53, $penilai, 1, 0, 'C');
+   $pdf->Cell(4.7, 0.53, 'Direktur SDM', 1, 0, 'C');
+   $pdf->Cell(4.7, 0.53, 'Direktur Utama / Wakil', 1, 0, 'C');
+   $pdf->Output("form_pdf/Form Penilaian ".$karyawan.".pdf","F");
+   $fpdf="Form Penilaian ".$karyawan.".pdf";
+	?>
+	<script>
+	  var email = "<?php echo $email; ?>";
+	  var nama = "<?php echo $karyawan; ?>";
+	  var pdf = "<?php echo $fpdf; ?>";
+	  var id = "<?php echo $did; ?>";
+	  /*window.location.href = 'kirim_email_form.php?nama='+nama+'&email='+email+'&pdf='+pdf;*/
+	  window.location.href = 'kirim_email_form_2.php?id='+id+'&email='+email+'&pdf='+pdf;
+	</script>
+	<?php
+}	
+?>
+
