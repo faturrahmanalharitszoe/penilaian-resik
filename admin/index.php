@@ -308,7 +308,7 @@ else
                             </div>
                         </div>
 						<?php
-						$qemployee=mysqli_query($koneksi,"select * from karyawan where divisi <> 'DIREKSI' and jabatan <> 'ADMIN' and jabatan <> 'KEPALA CABANG'");
+						$qemployee=mysqli_query($koneksi,"select * from karyawan where divisi <> 'DIREKSI' and jabatan <> 'ADMIN' and jabatan <> 'KEPALA CABANG' and aktif = 1");
 						$ttl_employee=mysqli_num_rows($qemployee);
 						?>
                         <!-- Total Employee Card -->
@@ -330,7 +330,7 @@ else
                         </div>
 
 						<?php
-						$qdirektur=mysqli_query($koneksi,"select * from karyawan where jabatan = 'DIREKTUR'");
+						$qdirektur=mysqli_query($koneksi,"select * from karyawan where jabatan = 'DIREKTUR' and aktif = 1");
 						$ttl_direktur=mysqli_num_rows($qdirektur);
 						?>
                         <!-- Direktur Card -->
@@ -352,7 +352,7 @@ else
                         </div>
 
 						<?php
-						$qsm=mysqli_query($koneksi,"select * from karyawan where jabatan = 'SENIOR MANAGER'");
+						$qsm=mysqli_query($koneksi,"select * from karyawan where jabatan = 'SENIOR MANAGER' and aktif = 1");
 						$ttl_sm=mysqli_num_rows($qsm);
 						?>
                         <!-- Senior Manager Card -->
@@ -377,7 +377,7 @@ else
 					<div class="row">
 					
 						 <?php
-						 $qmanager=mysqli_query($koneksi,"select * from karyawan where jabatan = 'MANAGER'");
+						 $qmanager=mysqli_query($koneksi,"select * from karyawan where jabatan = 'MANAGER' and aktif = 1");
 						 $ttl_manager=mysqli_num_rows($qmanager);
 						 ?>
 					     <!-- Manager Card -->
@@ -399,7 +399,7 @@ else
                         </div>
 						
 						<?php
-						$qam=mysqli_query($koneksi,"select * from karyawan where jabatan = 'ASISTEN MANAGER'");
+						$qam=mysqli_query($koneksi,"select * from karyawan where jabatan = 'ASISTEN MANAGER' and aktif = 1");
 						$ttl_am=mysqli_num_rows($qam);
 						?>
 						<!-- Asisten Manager Card -->
@@ -421,7 +421,7 @@ else
                         </div>
 						
 						<?php
-						$qkabag=mysqli_query($koneksi,"select * from karyawan where jabatan = 'KEPALA BAGIAN'");
+						$qkabag=mysqli_query($koneksi,"select * from karyawan where jabatan = 'KEPALA BAGIAN' and aktif = 1");
 						$ttl_kabag=mysqli_num_rows($qkabag);
 						?>
 						<!-- Kabag Card -->
@@ -443,7 +443,7 @@ else
                         </div>
 						
 						<?php
-						$qstaff=mysqli_query($koneksi,"select * from karyawan where jabatan = 'STAFF'");
+						$qstaff=mysqli_query($koneksi,"select * from karyawan where jabatan = 'STAFF' and aktif = 1");
 						$ttl_staff=mysqli_num_rows($qstaff);
 						?>
 						<!-- Staff Card -->
