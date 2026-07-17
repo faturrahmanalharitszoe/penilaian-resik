@@ -592,7 +592,7 @@ if($month == 1) {
 		var myAreaChart = new Chart(ctx, {
 			type: 'bar',
 			data: {
-				labels: ["MARKETING", "OPERASIONAL", "KEUANGAN/ACC","GA/IT", "SDM/LEGAL"],
+				labels: ["MARKETING", "OPERASIONAL", "KEUANGAN/ACC","IT", "SDM/LEGAL"],
 				datasets: [{
 					label: '',
 					data: [
@@ -602,7 +602,7 @@ if($month == 1) {
 					echo $data_marketing['avg_marketing'] ? round($data_marketing['avg_marketing'],2) : 0;
 					?>, 
 					<?php 
-					$qops = mysqli_query($koneksi,"select avg(rata_akhir) as avg_ops from penilaian where divisi like '%OPERASIONAL%' or  divisi like '%OPS%' and periode='$periode'");
+					$qops = mysqli_query($koneksi,"select avg(rata_akhir) as avg_ops from penilaian where (divisi like '%OPERASIONAL%' or  divisi like '%OPS%') and periode='$periode'");
 					$data_ops = mysqli_fetch_array($qops);
 					echo $data_ops['avg_ops'] ? round($data_ops['avg_ops'],2) : 0;
 					?>, 
@@ -658,24 +658,24 @@ if($month == 1) {
 		var myAreaChart = new Chart(ctx, {
 			type: 'doughnut',
 			data: {
-				labels: ["Marketing", "Operasional", "GA/IT", "SDM/Legal", "Keuangan"],
+				labels: ["Marketing", "Operasional", "IT", "SDM/Legal", "Keuangan"],
 				datasets: [{
-					label: ["Marketing", "Operasional", "GA/IT", "SDM/Legal", "Keuangan"],
+					label: ["Marketing", "Operasional", "IT", "SDM/Legal", "Keuangan"],
 					data: [
 					<?php 
 					$query_marketing=mysqli_query($koneksi,"select * from penilaian where divisi ='MARKETING' and periode='$periode'");
 					echo mysqli_num_rows($query_marketing);	
 					?>, 
 					<?php 
-					$query_ops=mysqli_query($koneksi,"select * from penilaian where divisi ='OPERASIONAL' and periode='$periode'");
+					$query_ops=mysqli_query($koneksi,"select * from penilaian where (divisi like '%OPERASIONAL%' or  divisi like '%OPS%') and periode='$periode'");
 					echo mysqli_num_rows($query_ops);
 					?>, 
 					<?php 
-					$query_sdm=mysqli_query($koneksi,"select * from penilaian where (divisi ='GA' or divisi = 'IT') and periode='$periode'");
+					$query_sdm=mysqli_query($koneksi,"select * from penilaian where divisi like '%IT%' and periode='$periode'");
 					echo mysqli_num_rows($query_sdm);
 					?>, 
 					<?php 
-					$query_finance=mysqli_query($koneksi,"select * from penilaian where (divisi ='SDM' or divisi = 'LEGAL') and periode='$periode'");
+					$query_finance=mysqli_query($koneksi,"select * from penilaian where (divisi like '%SDM%' or divisi like '%LEGAL%') and periode='$periode'");
 					echo mysqli_num_rows($query_finance);
 					?>, 
 					<?php 
