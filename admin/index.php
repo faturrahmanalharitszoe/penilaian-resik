@@ -35,8 +35,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>
-    <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 <?php 
 session_start();
 if(empty($_SESSION['user']))
@@ -598,52 +597,29 @@ if($month == 1) {
 					label: '',
 					data: [
 					<?php 
-					$qmarketing = mysqli_query($koneksi,"select sum(rata_akhir) as total_marketing from penilaian where divisi='MARKETING'");
+					$qmarketing = mysqli_query($koneksi,"select avg(rata_akhir) as avg_marketing from penilaian where divisi='MARKETING'");
 					$data_marketing = mysqli_fetch_array($qmarketing);
-					$total_rata_marketing = $data_marketing['total_marketing']; 
-					$jumlah_marketing = mysqli_num_rows($qmarketing);
-					$rata_marketing = round($total_rata_marketing/$jumlah_marketing,2);
-					echo $rata_marketing;
+					echo $data_marketing['avg_marketing'] ? round($data_marketing['avg_marketing'],2) : 0;
 					?>, 
 					<?php 
-					$qops = mysqli_query($koneksi,"select sum(rata_akhir) as total_ops from penilaian where divisi='OPERASIONAL'");
+					$qops = mysqli_query($koneksi,"select avg(rata_akhir) as avg_ops from penilaian where divisi='OPERASIONAL'");
 					$data_ops = mysqli_fetch_array($qops);
-					$total_rata_ops = $data_ops['total_ops']; 
-					$jumlah_ops = mysqli_num_rows($qops);
-					$rata_ops = round($total_rata_ops/$jumlah_ops,2);
-					echo $rata_ops;
+					echo $data_ops['avg_ops'] ? round($data_ops['avg_ops'],2) : 0;
 					?>, 
 					<?php 
-					$qfinance = mysqli_query($koneksi,"select sum(rata_akhir) as total_finance from penilaian where divisi='KEUANGAN' or divisi = 'ACCOUNTING'");
+					$qfinance = mysqli_query($koneksi,"select avg(rata_akhir) as avg_finance from penilaian where (divisi='KEUANGAN' or divisi = 'ACCOUNTING')");
 					$data_finance = mysqli_fetch_array($qfinance);
-					$total_rata_finance = $data_finance['total_finance']; 
-					$jumlah_finance = mysqli_num_rows($qfinance);
-					$rata_finance = round($total_rata_finance/$jumlah_finance,2);
-					echo $rata_finance;
+					echo $data_finance['avg_finance'] ? round($data_finance['avg_finance'],2) : 0;
 					?>, 
 					<?php 
-					$qga = mysqli_query($koneksi,"select sum(rata_akhir) as total_ga from penilaian where divisi='GA' or divisi='IT'");
+					$qga = mysqli_query($koneksi,"select avg(rata_akhir) as avg_ga from penilaian where (divisi='GA' or divisi='IT')");
 					$data_ga = mysqli_fetch_array($qga);
-					$total_rata_ga = $data_ga['total_ga'];
-					$jumlah_ga = mysqli_num_rows($qga);
-					$rata_ga = round($total_rata_ga/$jumlah_ga,2);
-					echo $rata_ga;
+					echo $data_ga['avg_ga'] ? round($data_ga['avg_ga'],2) : 0;
 					?>,
 					<?php
-					$qsdm = mysqli_query($koneksi,"select sum(rata_akhir) as total_sdm from penilaian where divisi='SDM' or divisi='LEGAL'");
+					$qsdm = mysqli_query($koneksi,"select avg(rata_akhir) as avg_sdm from penilaian where (divisi='SDM' or divisi='LEGAL')");
 					$data_sdm = mysqli_fetch_array($qsdm);
-					$total_rata_sdm = $data_sdm['total_sdm']; 
-					$jumlah_sdm = mysqli_num_rows($qsdm);
-					$rata_sdm = round($total_rata_sdm/$jumlah_sdm,2);
-					echo $rata_sdm;
-					?>, 
-					<?php 
-					$qlegal = mysqli_query($koneksi,"select sum(rata_akhir) as total_legal from penilaian where divisi='LEGAL'");
-					$data_legal = mysqli_fetch_array($qlegal);
-					$total_rata_legal = $data_legal['total_legal']; 
-					$jumlah_legal = mysqli_num_rows($qlegal);
-					$rata_legal = round($total_rata_legal/$jumlah_legal,2);
-					echo $rata_legal;
+					echo $data_sdm['avg_sdm'] ? round($data_sdm['avg_sdm'],2) : 0;
 					?>
 					],
 					backgroundColor: [
