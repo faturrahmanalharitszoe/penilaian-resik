@@ -666,36 +666,26 @@ if($month == 1) {
 					//
 					$query_marketing=mysqli_query($koneksi,"select * from karyawan where divisi ='MARKETING' and aktif = 1");
 					$jum_marketing=mysqli_num_rows($query_marketing);
-					$qnilai_marketing=mysqli_query($koneksi,"select * from penilaian where divisi = 'MARKETING' and aktif = 1");
-					$jum_nilai_marketing=mysqli_num_rows($qnilai_marketing);
 					echo $jum_marketing;	
 					?>, 
 					<?php 
 					$query_ops=mysqli_query($koneksi,"select * from karyawan where divisi ='OPERASIONAL' and aktif = 1");
 					$jum_ops=mysqli_num_rows($query_ops);
-					$qnilai_ops=mysqli_query($koneksi,"select * from penilaian where divisi = 'OPERASIONAL' and aktif = 1");
-					$jum_nilai_ops=mysqli_num_rows($qnilai_ops);
 					echo $jum_ops;
 					?>, 
 					<?php 
 					$query_sdm=mysqli_query($koneksi,"select * from karyawan where (divisi ='GA' or divisi = 'IT') and aktif = 1");
 					$jum_sdm=mysqli_num_rows($query_sdm);
-					$qnilai_sdm=mysqli_query($koneksi,"select * from penilaian where (divisi = 'GA' or divisi = 'IT') and aktif = 1");
-					$jum_nilai_sdm=mysqli_num_rows($qnilai_sdm);
 					echo $jum_sdm;
 					?>, 
 					<?php 
 					$query_finance=mysqli_query($koneksi,"select * from karyawan where (divisi ='SDM' or divisi = 'LEGAL') and aktif = 1");
 					$jum_finance=mysqli_num_rows($query_finance);
-					$qnilai_finance=mysqli_query($koneksi,"select * from penilaian where (divisi = 'SDM' or divisi = 'LEGAL') and aktif = 1");
-					$jum_nilai_finance=mysqli_num_rows($qnilai_finance);
 					echo $jum_finance;
 					?>, 
 					<?php 
 					$query_legal=mysqli_query($koneksi,"select * from karyawan where (divisi ='KEUANGAN' or divisi = 'ACCOUNTING') and aktif = 1");
 					$jum_legal=mysqli_num_rows($query_legal);
-					$qnilai_legal=mysqli_query($koneksi,"select * from penilaian where (divisi = 'KEUANGAN' or divisi = 'ACCOUNTING') and aktif = 1");
-					$jum_nilai_legal=mysqli_num_rows($qnilai_legal);
 					echo $jum_legal;
 					?>
 					],
