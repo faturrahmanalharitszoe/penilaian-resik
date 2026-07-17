@@ -35,8 +35,8 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>
-    <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 <?php 
 session_start();
 if(empty($_GET['user']))
@@ -323,23 +323,6 @@ else
 											<th class="text-center">Aksi</th>
                                         </tr>
                                     </thead>
-									<tfoot class="text-center">
-										<tr>
-											<th>No</th>
-											<th>Tgl Penilaian</th>
-											<th>Periode</th>
-											<th>Nik</th>
-											<th>Nama Karyawan</th>
-											<th>Golongan</th>
-											<th>Jabatan</th>
-											<th>Divisi 1</th>
-											<th>Divisi 2</th>
-											<th>Total Nilai</th>
-											<th>Rata-Rata</th>
-											<th>Status</th>
-											<th>Aksi</th>
-										</tr>
-									</tfoot>
                                     <tbody>
 									<?php
 									   include "koneksi.php";
@@ -437,36 +420,7 @@ else
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script>
-    $(document).ready(function() {
-        // Setup - add a text input to each footer cell
-        $('#dataTable tfoot th').each( function () {
-            var title = $(this).text();
-            if(title !== 'Aksi' && title !== 'No') {
-                $(this).html( '<input type="text" placeholder="Filter '+title+'" style="width:100%; font-size:10px; padding:2px;" />' );
-            } else {
-                $(this).html(''); // No filter for Action or No
-            }
-        });
-
-        // DataTable
-        var table = $('#dataTable').DataTable({
-            initComplete: function () {
-                // Apply the search
-                this.api().columns().every( function () {
-                    var that = this;
-                    $( 'input', this.footer() ).on( 'keyup change clear', function () {
-                        if ( that.search() !== this.value ) {
-                            that
-                                .search( this.value )
-                                .draw();
-                        }
-                    } );
-                } );
-            }
-        });
-    });
-    </script>
+    <script src="js/demo/datatables-demo.js"></script>
 </body>
 
 </html>

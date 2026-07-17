@@ -663,30 +663,24 @@ if($month == 1) {
 					label: ["Marketing", "Operasional", "GA/IT", "SDM/Legal", "Keuangan"],
 					data: [
 					<?php 
-					//
-					$query_marketing=mysqli_query($koneksi,"select * from karyawan where divisi ='MARKETING' and aktif = 1");
-					$jum_marketing=mysqli_num_rows($query_marketing);
-					echo $jum_marketing;	
+					$query_marketing=mysqli_query($koneksi,"select * from penilaian where divisi ='MARKETING' and periode='$periode'");
+					echo mysqli_num_rows($query_marketing);	
 					?>, 
 					<?php 
-					$query_ops=mysqli_query($koneksi,"select * from karyawan where divisi ='OPERASIONAL' and aktif = 1");
-					$jum_ops=mysqli_num_rows($query_ops);
-					echo $jum_ops;
+					$query_ops=mysqli_query($koneksi,"select * from penilaian where divisi ='OPERASIONAL' and periode='$periode'");
+					echo mysqli_num_rows($query_ops);
 					?>, 
 					<?php 
-					$query_sdm=mysqli_query($koneksi,"select * from karyawan where (divisi ='GA' or divisi = 'IT') and aktif = 1");
-					$jum_sdm=mysqli_num_rows($query_sdm);
-					echo $jum_sdm;
+					$query_sdm=mysqli_query($koneksi,"select * from penilaian where (divisi ='GA' or divisi = 'IT') and periode='$periode'");
+					echo mysqli_num_rows($query_sdm);
 					?>, 
 					<?php 
-					$query_finance=mysqli_query($koneksi,"select * from karyawan where (divisi ='SDM' or divisi = 'LEGAL') and aktif = 1");
-					$jum_finance=mysqli_num_rows($query_finance);
-					echo $jum_finance;
+					$query_finance=mysqli_query($koneksi,"select * from penilaian where (divisi ='SDM' or divisi = 'LEGAL') and periode='$periode'");
+					echo mysqli_num_rows($query_finance);
 					?>, 
 					<?php 
-					$query_legal=mysqli_query($koneksi,"select * from karyawan where (divisi ='KEUANGAN' or divisi = 'ACCOUNTING') and aktif = 1");
-					$jum_legal=mysqli_num_rows($query_legal);
-					echo $jum_legal;
+					$query_legal=mysqli_query($koneksi,"select * from penilaian where (divisi ='KEUANGAN' or divisi = 'ACCOUNTING') and periode='$periode'");
+					echo mysqli_num_rows($query_legal);
 					?>
 					],
 					backgroundColor: [
