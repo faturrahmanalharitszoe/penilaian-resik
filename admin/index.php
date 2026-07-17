@@ -597,27 +597,27 @@ if($month == 1) {
 					label: '',
 					data: [
 					<?php 
-					$qmarketing = mysqli_query($koneksi,"select avg(rata_akhir) as avg_marketing from penilaian where divisi='MARKETING'");
+					$qmarketing = mysqli_query($koneksi,"select avg(rata_akhir) as avg_marketing from penilaian where divisi='MARKETING' and periode='$periode'");
 					$data_marketing = mysqli_fetch_array($qmarketing);
 					echo $data_marketing['avg_marketing'] ? round($data_marketing['avg_marketing'],2) : 0;
 					?>, 
 					<?php 
-					$qops = mysqli_query($koneksi,"select avg(rata_akhir) as avg_ops from penilaian where divisi='OPERASIONAL'");
+					$qops = mysqli_query($koneksi,"select avg(rata_akhir) as avg_ops from penilaian where divisi like '%OPERASIONAL%' or  divisi like '%OPS%' and periode='$periode'");
 					$data_ops = mysqli_fetch_array($qops);
 					echo $data_ops['avg_ops'] ? round($data_ops['avg_ops'],2) : 0;
 					?>, 
 					<?php 
-					$qfinance = mysqli_query($koneksi,"select avg(rata_akhir) as avg_finance from penilaian where (divisi='KEUANGAN' or divisi = 'ACCOUNTING')");
+					$qfinance = mysqli_query($koneksi,"select avg(rata_akhir) as avg_finance from penilaian where (divisi='KEUANGAN' or divisi = 'ACCOUNTING') and periode='$periode'");
 					$data_finance = mysqli_fetch_array($qfinance);
 					echo $data_finance['avg_finance'] ? round($data_finance['avg_finance'],2) : 0;
 					?>, 
 					<?php 
-					$qga = mysqli_query($koneksi,"select avg(rata_akhir) as avg_ga from penilaian where (divisi='GA' or divisi='IT')");
+					$qga = mysqli_query($koneksi,"select avg(rata_akhir) as avg_ga from penilaian where (divisi='IT') and periode='$periode'");
 					$data_ga = mysqli_fetch_array($qga);
 					echo $data_ga['avg_ga'] ? round($data_ga['avg_ga'],2) : 0;
 					?>,
 					<?php
-					$qsdm = mysqli_query($koneksi,"select avg(rata_akhir) as avg_sdm from penilaian where (divisi='SDM' or divisi='LEGAL')");
+					$qsdm = mysqli_query($koneksi,"select avg(rata_akhir) as avg_sdm from penilaian where (divisi like'%SDM%' or divisi like'%LEGAL%') and periode='$periode'");
 					$data_sdm = mysqli_fetch_array($qsdm);
 					echo $data_sdm['avg_sdm'] ? round($data_sdm['avg_sdm'],2) : 0;
 					?>

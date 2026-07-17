@@ -308,21 +308,38 @@ else
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="font-size:12px;">
                                     <thead>
                                         <tr>
-                                            <th nowrap><center>No</center></th>
-                                            <th nowrap><center>Tgl Penilaian</center></th>
-                                            <th nowrap><center>Periode</center></th>
-											<th nowrap><center>Nik</center></th>
-											<th nowrap><center>Nama Karyawan</center></th>
-											<th nowrap><center>Golongan</center></th>
-											<th nowrap><center>Jabatan</center></th>
-											<th nowrap><center>Divisi 1</center></th>
-											<th nowrap><center>Divisi 2</center></th>
-											<th nowrap><center>Total Nilai</center></th>
-											<th nowrap><center>Rata-Rata</center></th>
-											<th nowrap><center>Status</center></th>
-											<th><center>Aksi</center></th>
+                                            <th nowrap class="text-center">No</th>
+                                            <th nowrap class="text-center">Tgl Penilaian</th>
+                                            <th nowrap class="text-center">Periode</th>
+											<th nowrap class="text-center">Nik</th>
+											<th nowrap class="text-center">Nama Karyawan</th>
+											<th nowrap class="text-center">Golongan</th>
+											<th nowrap class="text-center">Jabatan</th>
+											<th nowrap class="text-center">Divisi 1</th>
+											<th nowrap class="text-center">Divisi 2</th>
+											<th nowrap class="text-center">Total Nilai</th>
+											<th nowrap class="text-center">Rata-Rata</th>
+											<th nowrap class="text-center">Status</th>
+											<th class="text-center">Aksi</th>
                                         </tr>
                                     </thead>
+									<tfoot class="text-center">
+										<tr>
+											<th>No</th>
+											<th>Tgl Penilaian</th>
+											<th>Periode</th>
+											<th>Nik</th>
+											<th>Nama Karyawan</th>
+											<th>Golongan</th>
+											<th>Jabatan</th>
+											<th>Divisi 1</th>
+											<th>Divisi 2</th>
+											<th>Total Nilai</th>
+											<th>Rata-Rata</th>
+											<th>Status</th>
+											<th>Aksi</th>
+										</tr>
+									</tfoot>
                                     <tbody>
 									<?php
 									   include "koneksi.php";
@@ -420,8 +437,36 @@ else
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
+    <script>
+    $(document).ready(function() {
+        // Setup - add a text input to each footer cell
+        $('#dataTable tfoot th').each( function () {
+            var title = $(this).text();
+            if(title !== 'Aksi' && title !== 'No') {
+                $(this).html( '<input type="text" placeholder="Filter '+title+'" style="width:100%; font-size:10px; padding:2px;" />' );
+            } else {
+                $(this).html(''); // No filter for Action or No
+            }
+        });
 
+        // DataTable
+        var table = $('#dataTable').DataTable({
+            initComplete: function () {
+                // Apply the search
+                this.api().columns().every( function () {
+                    var that = this;
+                    $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                        if ( that.search() !== this.value ) {
+                            that
+                                .search( this.value )
+                                .draw();
+                        }
+                    } );
+                } );
+            }
+        });
+    });
+    </script>
 </body>
 
 </html>
