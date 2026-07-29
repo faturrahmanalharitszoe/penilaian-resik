@@ -7,11 +7,18 @@
     $qcek = mysqli_query($koneksi,"select status from penilaian where id = '$id'");
     $dcek = mysqli_fetch_array($qcek);
     $status = $dcek['status'];
+    
+    $qnilai = mysqli_query($koneksi,"select * from penilaian where id = '$id'");
+    $dnilai = mysqli_fetch_array($qnilai);
+    
+    if ($dnilai['mengetahui_1'] == '-' || $dnilai['mengetahui_1'] == '') {
+        header("Location: update_approval_2.php?id=".$id);
+        exit;
+    }
+
     if ($status == 'PENILAI 1')
     {
 	    //
-	    $qnilai = mysqli_query($koneksi,"select * from penilaian where id = '$id'");
-	    $dnilai = mysqli_fetch_array($qnilai);
 	    $mengetahui = $dnilai['mengetahui_2'];
 	    $menyetujui = $dnilai['menyetujui'];
 	    //
