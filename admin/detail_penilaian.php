@@ -414,8 +414,13 @@ else
 										   <td nowrap><center><?php echo $row['tgl_approval']; ?></center></td>
 										   <td nowrap><center><?php echo $row['menyetujui']; ?></center></td>
 										   <?php
-										   $score_app_total = ($row['total_nilai4'] > 0) ? $row['total_nilai4'] : $row['total_nilai3'];
-										   $score_app_rata = ($row['rata_nilai4'] > 0) ? $row['rata_nilai4'] : $row['rata_nilai3'];
+                                           if ($row['status'] == 'APPROVED') {
+										       $score_app_total = ($row['total_nilai4'] > 0) ? $row['total_nilai4'] : $row['total_nilai3'];
+										       $score_app_rata = ($row['rata_nilai4'] > 0) ? $row['rata_nilai4'] : $row['rata_nilai3'];
+                                           } else {
+                                               $score_app_total = "-";
+                                               $score_app_rata = "-";
+                                           }
 										   ?>
 										   <td nowrap><center><?php echo $score_app_total; ?></center></td>
 										   <td nowrap><center><?php echo $score_app_rata; ?></center></td>
