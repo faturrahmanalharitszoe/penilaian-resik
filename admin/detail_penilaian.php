@@ -389,7 +389,7 @@ else
                                     <thead>
                                         <tr>
 										    <th rowspan="2">No<center style="padding-bottom:20px">
-											<th colspan="2"><center>Approval</center></th>
+											<th colspan="4"><center>Approval</center></th>
 											<th rowspan="2"><center style="padding-bottom:20px">Total Nilai</center></th>
 											<th rowspan="2"><center style="padding-bottom:20px">Rata-Rata</center></th>
 											<th rowspan="2"><center style="padding-bottom:20px">Status</center></th>
@@ -397,6 +397,8 @@ else
 										<tr>
                                             <th><center>Tanggal</center></th>
                                             <th><center>Nama</center></th>
+                                            <th><center>Ttl Nilai</center></th>
+											<th><center>Rata 2x</center></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -411,6 +413,12 @@ else
 		    						   	   <td><center><?php echo $count;?></center></td>
 										   <td nowrap><center><?php echo $row['tgl_approval']; ?></center></td>
 										   <td nowrap><center><?php echo $row['menyetujui']; ?></center></td>
+										   <?php
+										   $score_app_total = ($row['total_nilai4'] > 0) ? $row['total_nilai4'] : $row['total_nilai3'];
+										   $score_app_rata = ($row['rata_nilai4'] > 0) ? $row['rata_nilai4'] : $row['rata_nilai3'];
+										   ?>
+										   <td nowrap><center><?php echo $score_app_total; ?></center></td>
+										   <td nowrap><center><?php echo $score_app_rata; ?></center></td>
 										   <td nowrap><center><?php echo $row['total_akhir']; ?></center></td>
 										   <td nowrap><center><?php echo $row['rata_akhir']; ?></center></td>
 										   <td nowrap><center><?php echo $row['status']; ?></center></td>
