@@ -91,7 +91,6 @@ if (isset($_GET['id']))
    $mengetahui_1 = $dnilai['mengetahui_1'];
    $mengetahui_2 = $dnilai['mengetahui_2'];
    $menyetujui = $dnilai['menyetujui'];
-   $status = $dnilai['status'];
 
    $qmengetahui = mysqli_query($koneksi,"select * from karyawan where nama = '$mengetahui_2'");
    $dmengetahui = mysqli_fetch_array($qmengetahui);
@@ -300,6 +299,575 @@ if (isset($_GET['id']))
       $pdf->Cell(7.7, 0.6, ': '.$divisi, 0, 0, 'L');  
    }	  
    $pdf->SetX(11.3);
+   $pdf->Cell(2.3, 0.6, 'Masa Kerja', 0, 0, 'L');
+   $pdf->Cell(6.2, 0.6, ': '.$masakerja, 'R', 1, 'L');
+   $pdf->SetX(1);
+   $pdf->Cell(2.3, 0.6, 'Nama / NIK', 'L', 0, 'L');
+   $txt_nama = ': '.$karyawan.' / '.$nik;
+$x_nama = $pdf->GetX();
+$y_nama = $pdf->GetY();
+if ($pdf->GetStringWidth($txt_nama) > 7.6) {
+    $pdf->MultiCell(7.7, 0.3, $txt_nama, 0, 'L');
+    $pdf->SetXY($x_nama + 7.7, $y_nama);
+} else {
+    $pdf->Cell(7.7, 0.6, $txt_nama, 0, 0, 'L');
+}
+   $pdf->SetX(11.3);
+   $pdf->Cell(2.3, 0.6, 'Gol/Jabatan', 0, 0, 'L');
+   if($gol == '')
+   {
+      $pdf->Cell(6.2, 0.6, ': '.$jabatan, 'R', 1, 'L'); 
+   }
+   else
+   { 
+   	  $pdf->Cell(6.2, 0.6, ': '.$gol.' / '.$jabatan, 'R', 1, 'L');
+   } 
+   $pdf->Cell(2.3, 0.6, 'Pendidikan', 'L', 0, 'L');
+   $pdf->Cell(7.7, 0.6, ': '.$sekolah, 0, 0, 'L');
+   $pdf->SetX(11.3);
+   $pdf->Cell(2.3, 0.6, 'Periode', 0, 0, 'L');
+   $pdf->Cell(6.2, 0.6, ': '.$periode, 'R', 1, 'L');
+   $pdf->Cell(18.8, 0.1, '', 'LR', 1, 'L');
+   $pdf->Line(1,5.4,19.8,5.4);
+   $pdf->SetLineWidth(0);      
+   $pdf->Line(1,5.47,19.8,5.47);   
+   $pdf->SetLineWidth(0);
+   $pdf->SetFont('Arial','B',12);
+   $pdf->Cell(1.2, 1.2, 'NO', 'LBR', 0, 'C');  
+   $pdf->Cell(9.1, 1.2, 'ASPEK PENILAIAN', 'LBR', 0, 'C');
+   $pdf->SetFont('Arial','',10);
+   $pdf->Cell(8.5, 0.6, 'SKOR PENILAIAN', 'LBR', 1, 'C');
+   $pdf->SetX(11.3);
+   $pdf->Cell(2.1, 0.6, 'NILAI I', 'LBR', 0, 'C');
+   $pdf->Cell(2.1, 0.6, 'NILAI II', 'LBR', 0, 'C');
+   $pdf->Cell(2.1, 0.6, 'NILAI III', 'LBR', 0, 'C');
+   $pdf->Cell(2.2, 0.6, 'AKHIR', 'LBR', 1, 'C');
+   $pdf->Line(1,6.76,19.8,6.76);
+   $pdf->SetLineWidth(0);      
+   $pdf->SetX(1);
+   $pdf->SetFont('Arial','B',10);
+   $pdf->Cell(18.8, 0.6, 'A. '.$aspek[1], 'LBR', 1, 'L');
+   $pdf->SetFont('Arial','',10);
+   $pdf->Cell(1.2, 0.53, '1', 'LBR', 0, 'C'); 
+   $qkriteria=mysqli_query($koneksi,"select * from kriteria_penilaian where id_aspek = '$id_aspek[1]'");
+   $i=0;
+   while($row=mysqli_fetch_array($qkriteria))
+   {
+	   $kriteria[$i] = $row['kriteria'];
+	   $i++;
+   }
+   $pdf->Cell(9.1, 0.53, $kriteria[0], 'LBR', 0, 'L');
+   $pdf->SetX(11.3);
+   $val1 = ($nilai1_1 == '0' || $nilai1_1 == '') ? 'N/A' : $nilai1_1;
+   $val2 = ($nilai3_1 == '0' || $nilai3_1 == '') ? 'N/A' : $nilai3_1;
+   if ($status == 'APPROVED') {
+       if ($nilai4_1 > 0) { $val3 = $nilai4_1; }
+       elseif ($nilai3_1 > 0) { $val3 = $nilai3_1; }
+       elseif ($nilai2_1 > 0) { $val3 = $nilai2_1; }
+       else { $val3 = $nilai1_1; }
+   } else {
+       $val3 = 'N/A';
+   }
+   $val3 = ($val3 == '0' || $val3 == '') ? 'N/A' : $val3;
+   $pdf->Cell(2.1, 0.53, $val1, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, 0.53, $val2, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, 0.53, $val3, 'LBR', 0, 'C');
+   $pdf->Cell(2.2, 0.53, $akhir1, 'LBR', 1, 'C');
+   $txt = $kriteria[1];
+$h = ($pdf->GetStringWidth($txt) > 8.9) ? 1.06 : 0.53;
+$pdf->Cell(1.2, $h, '2', 'LBR', 0, 'C');
+$startX = $pdf->GetX();
+$startY = $pdf->GetY();
+if ($h == 1.06) {
+    $pdf->MultiCell(9.1, 0.53, $txt, 'LBR', 'L');
+    $pdf->SetXY($startX + 9.1, $startY);
+} else {
+    $pdf->Cell(9.1, $h, $txt, 'LBR', 0, 'L');
+}
+$pdf->SetX(11.3);
+   $val1 = ($nilai1_2 == '0' || $nilai1_2 == '') ? 'N/A' : $nilai1_2;
+   $val2 = ($nilai3_2 == '0' || $nilai3_2 == '') ? 'N/A' : $nilai3_2;
+   if ($status == 'APPROVED') {
+       if ($nilai4_2 > 0) { $val3 = $nilai4_2; }
+       elseif ($nilai3_2 > 0) { $val3 = $nilai3_2; }
+       elseif ($nilai2_2 > 0) { $val3 = $nilai2_2; }
+       else { $val3 = $nilai1_2; }
+   } else {
+       $val3 = 'N/A';
+   }
+   $val3 = ($val3 == '0' || $val3 == '') ? 'N/A' : $val3;
+   $pdf->Cell(2.1, $h, $val1, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val2, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val3, 'LBR', 0, 'C');
+   $pdf->Cell(2.2, $h, $akhir2, 'LBR', 1, 'C');
+   $txt = $kriteria[2];
+$h = ($pdf->GetStringWidth($txt) > 8.9) ? 1.06 : 0.53;
+$pdf->Cell(1.2, $h, '3', 'LBR', 0, 'C');
+$startX = $pdf->GetX();
+$startY = $pdf->GetY();
+if ($h == 1.06) {
+    $pdf->MultiCell(9.1, 0.53, $txt, 'LBR', 'L');
+    $pdf->SetXY($startX + 9.1, $startY);
+} else {
+    $pdf->Cell(9.1, $h, $txt, 'LBR', 0, 'L');
+}
+$pdf->SetX(11.3);
+   $val1 = ($nilai1_3 == '0' || $nilai1_3 == '') ? 'N/A' : $nilai1_3;
+   $val2 = ($nilai3_3 == '0' || $nilai3_3 == '') ? 'N/A' : $nilai3_3;
+   if ($status == 'APPROVED') {
+       if ($nilai4_3 > 0) { $val3 = $nilai4_3; }
+       elseif ($nilai3_3 > 0) { $val3 = $nilai3_3; }
+       elseif ($nilai2_3 > 0) { $val3 = $nilai2_3; }
+       else { $val3 = $nilai1_3; }
+   } else {
+       $val3 = 'N/A';
+   }
+   $val3 = ($val3 == '0' || $val3 == '') ? 'N/A' : $val3;
+   $pdf->Cell(2.1, $h, $val1, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val2, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val3, 'LBR', 0, 'C');
+   $pdf->Cell(2.2, $h, $akhir3, 'LBR', 1, 'C');
+   $txt = $kriteria[3];
+$h = ($pdf->GetStringWidth($txt) > 8.9) ? 1.06 : 0.53;
+$pdf->Cell(1.2, $h, '4', 'LBR', 0, 'C');
+$startX = $pdf->GetX();
+$startY = $pdf->GetY();
+if ($h == 1.06) {
+    $pdf->MultiCell(9.1, 0.53, $txt, 'LBR', 'L');
+    $pdf->SetXY($startX + 9.1, $startY);
+} else {
+    $pdf->Cell(9.1, $h, $txt, 'LBR', 0, 'L');
+}
+$pdf->SetX(11.3);
+   $val1 = ($nilai1_4 == '0' || $nilai1_4 == '') ? 'N/A' : $nilai1_4;
+   $val2 = ($nilai3_4 == '0' || $nilai3_4 == '') ? 'N/A' : $nilai3_4;
+   if ($status == 'APPROVED') {
+       if ($nilai4_4 > 0) { $val3 = $nilai4_4; }
+       elseif ($nilai3_4 > 0) { $val3 = $nilai3_4; }
+       elseif ($nilai2_4 > 0) { $val3 = $nilai2_4; }
+       else { $val3 = $nilai1_4; }
+   } else {
+       $val3 = 'N/A';
+   }
+   $val3 = ($val3 == '0' || $val3 == '') ? 'N/A' : $val3;
+   $pdf->Cell(2.1, $h, $val1, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val2, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val3, 'LBR', 0, 'C');
+   $pdf->Cell(2.2, $h, $akhir4, 'LBR', 1, 'C');
+   $txt = $kriteria[4];
+$h = ($pdf->GetStringWidth($txt) > 8.9) ? 1.06 : 0.53;
+$pdf->Cell(1.2, $h, '5', 'LBR', 0, 'C');
+$startX = $pdf->GetX();
+$startY = $pdf->GetY();
+if ($h == 1.06) {
+    $pdf->MultiCell(9.1, 0.53, $txt, 'LBR', 'L');
+    $pdf->SetXY($startX + 9.1, $startY);
+} else {
+    $pdf->Cell(9.1, $h, $txt, 'LBR', 0, 'L');
+}
+$pdf->SetX(11.3);
+   $val1 = ($nilai1_5 == '0' || $nilai1_5 == '') ? 'N/A' : $nilai1_5;
+   $val2 = ($nilai3_5 == '0' || $nilai3_5 == '') ? 'N/A' : $nilai3_5;
+   if ($status == 'APPROVED') {
+       if ($nilai4_5 > 0) { $val3 = $nilai4_5; }
+       elseif ($nilai3_5 > 0) { $val3 = $nilai3_5; }
+       elseif ($nilai2_5 > 0) { $val3 = $nilai2_5; }
+       else { $val3 = $nilai1_5; }
+   } else {
+       $val3 = 'N/A';
+   }
+   $val3 = ($val3 == '0' || $val3 == '') ? 'N/A' : $val3;
+   $pdf->Cell(2.1, $h, $val1, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val2, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val3, 'LBR', 0, 'C');
+   $pdf->Cell(2.2, $h, $akhir5, 'LBR', 1, 'C');
+   $txt = $kriteria[5];
+$h = ($pdf->GetStringWidth($txt) > 8.9) ? 1.06 : 0.53;
+$pdf->Cell(1.2, $h, '6', 'LBR', 0, 'C');
+$startX = $pdf->GetX();
+$startY = $pdf->GetY();
+if ($h == 1.06) {
+    $pdf->MultiCell(9.1, 0.53, $txt, 'LBR', 'L');
+    $pdf->SetXY($startX + 9.1, $startY);
+} else {
+    $pdf->Cell(9.1, $h, $txt, 'LBR', 0, 'L');
+}
+$pdf->SetX(11.3);
+   $val1 = ($nilai1_6 == '0' || $nilai1_6 == '') ? 'N/A' : $nilai1_6;
+   $val2 = ($nilai3_6 == '0' || $nilai3_6 == '') ? 'N/A' : $nilai3_6;
+   if ($status == 'APPROVED') {
+       if ($nilai4_6 > 0) { $val3 = $nilai4_6; }
+       elseif ($nilai3_6 > 0) { $val3 = $nilai3_6; }
+       elseif ($nilai2_6 > 0) { $val3 = $nilai2_6; }
+       else { $val3 = $nilai1_6; }
+   } else {
+       $val3 = 'N/A';
+   }
+   $val3 = ($val3 == '0' || $val3 == '') ? 'N/A' : $val3;
+   $pdf->Cell(2.1, $h, $val1, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val2, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val3, 'LBR', 0, 'C');
+   $pdf->Cell(2.2, $h, $akhir6, 'LBR', 1, 'C');
+   $txt = $kriteria[6];
+$h = ($pdf->GetStringWidth($txt) > 8.9) ? 1.06 : 0.53;
+$pdf->Cell(1.2, $h, '7', 'LBR', 0, 'C');
+$startX = $pdf->GetX();
+$startY = $pdf->GetY();
+if ($h == 1.06) {
+    $pdf->MultiCell(9.1, 0.53, $txt, 'LBR', 'L');
+    $pdf->SetXY($startX + 9.1, $startY);
+} else {
+    $pdf->Cell(9.1, $h, $txt, 'LBR', 0, 'L');
+}
+$pdf->SetX(11.3);
+   $val1 = ($nilai1_7 == '0' || $nilai1_7 == '') ? 'N/A' : $nilai1_7;
+   $val2 = ($nilai3_7 == '0' || $nilai3_7 == '') ? 'N/A' : $nilai3_7;
+   if ($status == 'APPROVED') {
+       if ($nilai4_7 > 0) { $val3 = $nilai4_7; }
+       elseif ($nilai3_7 > 0) { $val3 = $nilai3_7; }
+       elseif ($nilai2_7 > 0) { $val3 = $nilai2_7; }
+       else { $val3 = $nilai1_7; }
+   } else {
+       $val3 = 'N/A';
+   }
+   $val3 = ($val3 == '0' || $val3 == '') ? 'N/A' : $val3;
+   $pdf->Cell(2.1, $h, $val1, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val2, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val3, 'LBR', 0, 'C');
+   $pdf->Cell(2.2, $h, $akhir7, 'LBR', 1, 'C');
+   $txt = $kriteria[0];
+$h = ($pdf->GetStringWidth($txt) > 8.9) ? 1.06 : 0.53;
+$pdf->Cell(1.2, $h, '8', 'LBR', 0, 'C');
+$startX = $pdf->GetX();
+$startY = $pdf->GetY();
+if ($h == 1.06) {
+    $pdf->MultiCell(9.1, 0.53, $txt, 'LBR', 'L');
+    $pdf->SetXY($startX + 9.1, $startY);
+} else {
+    $pdf->Cell(9.1, $h, $txt, 'LBR', 0, 'L');
+}
+$pdf->SetX(11.3);
+   $val1 = ($nilai1_8 == '0' || $nilai1_8 == '') ? 'N/A' : $nilai1_8;
+   $val2 = ($nilai3_8 == '0' || $nilai3_8 == '') ? 'N/A' : $nilai3_8;
+   if ($status == 'APPROVED') {
+       if ($nilai4_8 > 0) { $val3 = $nilai4_8; }
+       elseif ($nilai3_8 > 0) { $val3 = $nilai3_8; }
+       elseif ($nilai2_8 > 0) { $val3 = $nilai2_8; }
+       else { $val3 = $nilai1_8; }
+   } else {
+       $val3 = 'N/A';
+   }
+   $val3 = ($val3 == '0' || $val3 == '') ? 'N/A' : $val3;
+   $pdf->Cell(2.1, $h, $val1, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val2, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val3, 'LBR', 0, 'C');
+   $pdf->Cell(2.2, $h, $akhir8, 'LBR', 1, 'C');
+   $pdf->Cell(18.8, 0.53, 'CATATAN :', 'LR', 1, 'L');
+   if($catatan11 == '')
+    {
+        $pdf->Cell(18.8, 0.53, $catatan1, 'LR', 1, 'L');
+    }
+    else
+    {
+        $pdf->Cell(18.8, 0.53, '1. '.$catatan1, 'LR', 1, 'L');
+        $pdf->Cell(18.8, 0.53, '2. '.$catatan11, 'LR', 1, 'L');
+    }
+   
+   $pdf->SetFont('Arial','B',10);
+   $pdf->Cell(18.8, 0.6, 'B. '.$aspek[2], 1, 1, 'L');
+   $pdf->SetFont('Arial','',10);
+   $pdf->Cell(1.2, 0.53, '1', 'LBR', 0, 'C'); 
+   $qkriteria=mysqli_query($koneksi,"select * from kriteria_penilaian where id_aspek = '$id_aspek[2]'");
+   $i=0;
+   while($row=mysqli_fetch_array($qkriteria))
+   {
+	   $kriteria[$i] = $row['kriteria'];
+	   $i++;
+   }
+   $pdf->Cell(9.1, 0.53, $kriteria[0], 'LBR', 0, 'L');
+   $pdf->SetX(11.3);
+   $val1 = ($nilai1_9 == '0' || $nilai1_9 == '') ? 'N/A' : $nilai1_9;
+   $val2 = ($nilai3_9 == '0' || $nilai3_9 == '') ? 'N/A' : $nilai3_9;
+   if ($status == 'APPROVED') {
+       if ($nilai4_9 > 0) { $val3 = $nilai4_9; }
+       elseif ($nilai3_9 > 0) { $val3 = $nilai3_9; }
+       elseif ($nilai2_9 > 0) { $val3 = $nilai2_9; }
+       else { $val3 = $nilai1_9; }
+   } else {
+       $val3 = 'N/A';
+   }
+   $val3 = ($val3 == '0' || $val3 == '') ? 'N/A' : $val3;
+   $pdf->Cell(2.1, 0.53, $val1, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, 0.53, $val2, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, 0.53, $val3, 'LBR', 0, 'C');
+   $pdf->Cell(2.2, 0.53, $akhir9, 'LBR', 1, 'C');
+   $txt = $kriteria[1];
+$h = ($pdf->GetStringWidth($txt) > 8.9) ? 1.06 : 0.53;
+$pdf->Cell(1.2, $h, '2', 'LBR', 0, 'C');
+$startX = $pdf->GetX();
+$startY = $pdf->GetY();
+if ($h == 1.06) {
+    $pdf->MultiCell(9.1, 0.53, $txt, 'LBR', 'L');
+    $pdf->SetXY($startX + 9.1, $startY);
+} else {
+    $pdf->Cell(9.1, $h, $txt, 'LBR', 0, 'L');
+}
+$pdf->SetX(11.3);
+   $val1 = ($nilai1_10 == '0' || $nilai1_10 == '') ? 'N/A' : $nilai1_10;
+   $val2 = ($nilai3_10 == '0' || $nilai3_10 == '') ? 'N/A' : $nilai3_10;
+   if ($status == 'APPROVED') {
+       if ($nilai4_10 > 0) { $val3 = $nilai4_10; }
+       elseif ($nilai3_10 > 0) { $val3 = $nilai3_10; }
+       elseif ($nilai2_10 > 0) { $val3 = $nilai2_10; }
+       else { $val3 = $nilai1_10; }
+   } else {
+       $val3 = 'N/A';
+   }
+   $val3 = ($val3 == '0' || $val3 == '') ? 'N/A' : $val3;
+   $pdf->Cell(2.1, $h, $val1, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val2, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val3, 'LBR', 0, 'C');
+   $pdf->Cell(2.2, $h, $akhir10, 'LBR', 1, 'C');
+   $txt = $kriteria[2];
+$h = ($pdf->GetStringWidth($txt) > 8.9) ? 1.06 : 0.53;
+$pdf->Cell(1.2, $h, '3', 'LBR', 0, 'C');
+$startX = $pdf->GetX();
+$startY = $pdf->GetY();
+if ($h == 1.06) {
+    $pdf->MultiCell(9.1, 0.53, $txt, 'LBR', 'L');
+    $pdf->SetXY($startX + 9.1, $startY);
+} else {
+    $pdf->Cell(9.1, $h, $txt, 'LBR', 0, 'L');
+}
+$pdf->SetX(11.3);
+   $val1 = ($nilai1_11 == '0' || $nilai1_11 == '') ? 'N/A' : $nilai1_11;
+   $val2 = ($nilai3_11 == '0' || $nilai3_11 == '') ? 'N/A' : $nilai3_11;
+   if ($status == 'APPROVED') {
+       if ($nilai4_11 > 0) { $val3 = $nilai4_11; }
+       elseif ($nilai3_11 > 0) { $val3 = $nilai3_11; }
+       elseif ($nilai2_11 > 0) { $val3 = $nilai2_11; }
+       else { $val3 = $nilai1_11; }
+   } else {
+       $val3 = 'N/A';
+   }
+   $val3 = ($val3 == '0' || $val3 == '') ? 'N/A' : $val3;
+   $pdf->Cell(2.1, $h, $val1, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val2, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val3, 'LBR', 0, 'C');
+   $pdf->Cell(2.2, $h, $akhir11, 'LBR', 1, 'C');
+   $txt = $kriteria[3];
+$h = ($pdf->GetStringWidth($txt) > 8.9) ? 1.06 : 0.53;
+$pdf->Cell(1.2, $h, '4', 'LBR', 0, 'C');
+$startX = $pdf->GetX();
+$startY = $pdf->GetY();
+if ($h == 1.06) {
+    $pdf->MultiCell(9.1, 0.53, $txt, 'LBR', 'L');
+    $pdf->SetXY($startX + 9.1, $startY);
+} else {
+    $pdf->Cell(9.1, $h, $txt, 'LBR', 0, 'L');
+}
+$pdf->SetX(11.3);
+   $val1 = ($nilai1_12 == '0' || $nilai1_12 == '') ? 'N/A' : $nilai1_12;
+   $val2 = ($nilai3_12 == '0' || $nilai3_12 == '') ? 'N/A' : $nilai3_12;
+   if ($status == 'APPROVED') {
+       if ($nilai4_12 > 0) { $val3 = $nilai4_12; }
+       elseif ($nilai3_12 > 0) { $val3 = $nilai3_12; }
+       elseif ($nilai2_12 > 0) { $val3 = $nilai2_12; }
+       else { $val3 = $nilai1_12; }
+   } else {
+       $val3 = 'N/A';
+   }
+   $val3 = ($val3 == '0' || $val3 == '') ? 'N/A' : $val3;
+   $pdf->Cell(2.1, $h, $val1, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val2, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val3, 'LBR', 0, 'C');
+   $pdf->Cell(2.2, $h, $akhir12, 'LBR', 1, 'C');
+   $txt = $kriteria[4];
+$h = ($pdf->GetStringWidth($txt) > 8.9) ? 1.06 : 0.53;
+$pdf->Cell(1.2, $h, '5', 'LBR', 0, 'C');
+$startX = $pdf->GetX();
+$startY = $pdf->GetY();
+if ($h == 1.06) {
+    $pdf->MultiCell(9.1, 0.53, $txt, 'LBR', 'L');
+    $pdf->SetXY($startX + 9.1, $startY);
+} else {
+    $pdf->Cell(9.1, $h, $txt, 'LBR', 0, 'L');
+}
+$pdf->SetX(11.3);
+   $val1 = ($nilai1_13 == '0' || $nilai1_13 == '') ? 'N/A' : $nilai1_13;
+   $val2 = ($nilai3_13 == '0' || $nilai3_13 == '') ? 'N/A' : $nilai3_13;
+   if ($status == 'APPROVED') {
+       if ($nilai4_13 > 0) { $val3 = $nilai4_13; }
+       elseif ($nilai3_13 > 0) { $val3 = $nilai3_13; }
+       elseif ($nilai2_13 > 0) { $val3 = $nilai2_13; }
+       else { $val3 = $nilai1_13; }
+   } else {
+       $val3 = 'N/A';
+   }
+   $val3 = ($val3 == '0' || $val3 == '') ? 'N/A' : $val3;
+   $pdf->Cell(2.1, $h, $val1, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val2, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val3, 'LBR', 0, 'C');
+   $pdf->Cell(2.2, $h, $akhir13, 'LBR', 1, 'C');
+   $txt = $kriteria[5];
+$h = ($pdf->GetStringWidth($txt) > 8.9) ? 1.06 : 0.53;
+$pdf->Cell(1.2, $h, '6', 'LBR', 0, 'C');
+$startX = $pdf->GetX();
+$startY = $pdf->GetY();
+if ($h == 1.06) {
+    $pdf->MultiCell(9.1, 0.53, $txt, 'LBR', 'L');
+    $pdf->SetXY($startX + 9.1, $startY);
+} else {
+    $pdf->Cell(9.1, $h, $txt, 'LBR', 0, 'L');
+}
+$pdf->SetX(11.3);
+   $val1 = ($nilai1_14 == '0' || $nilai1_14 == '') ? 'N/A' : $nilai1_14;
+   $val2 = ($nilai3_14 == '0' || $nilai3_14 == '') ? 'N/A' : $nilai3_14;
+   if ($status == 'APPROVED') {
+       if ($nilai4_14 > 0) { $val3 = $nilai4_14; }
+       elseif ($nilai3_14 > 0) { $val3 = $nilai3_14; }
+       elseif ($nilai2_14 > 0) { $val3 = $nilai2_14; }
+       else { $val3 = $nilai1_14; }
+   } else {
+       $val3 = 'N/A';
+   }
+   $val3 = ($val3 == '0' || $val3 == '') ? 'N/A' : $val3;
+   $pdf->Cell(2.1, $h, $val1, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val2, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val3, 'LBR', 0, 'C');
+   $pdf->Cell(2.2, $h, $akhir14, 'LBR', 1, 'C');
+   $txt = $kriteria[6];
+$h = ($pdf->GetStringWidth($txt) > 8.9) ? 1.06 : 0.53;
+$pdf->Cell(1.2, $h, '7', 'LBR', 0, 'C');
+$startX = $pdf->GetX();
+$startY = $pdf->GetY();
+if ($h == 1.06) {
+    $pdf->MultiCell(9.1, 0.53, $txt, 'LBR', 'L');
+    $pdf->SetXY($startX + 9.1, $startY);
+} else {
+    $pdf->Cell(9.1, $h, $txt, 'LBR', 0, 'L');
+}
+$pdf->SetX(11.3);
+   $val1 = ($nilai1_15 == '0' || $nilai1_15 == '') ? 'N/A' : $nilai1_15;
+   $val2 = ($nilai3_15 == '0' || $nilai3_15 == '') ? 'N/A' : $nilai3_15;
+   if ($status == 'APPROVED') {
+       if ($nilai4_15 > 0) { $val3 = $nilai4_15; }
+       elseif ($nilai3_15 > 0) { $val3 = $nilai3_15; }
+       elseif ($nilai2_15 > 0) { $val3 = $nilai2_15; }
+       else { $val3 = $nilai1_15; }
+   } else {
+       $val3 = 'N/A';
+   }
+   $val3 = ($val3 == '0' || $val3 == '') ? 'N/A' : $val3;
+   $pdf->Cell(2.1, $h, $val1, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val2, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val3, 'LBR', 0, 'C');
+   $pdf->Cell(2.2, $h, $akhir15, 'LBR', 1, 'C');
+   $pdf->Cell(18.8, 0.53, 'CATATAN :', 'LR', 1, 'L');
+   if($catatan21 == '')
+    {
+        $pdf->Cell(18.8, 0.53, $catatan2, 'LR', 1, 'L');
+    }
+    else
+    {
+        $pdf->Cell(18.8, 0.53, '1. '.$catatan2, 'LR', 1, 'L');
+        $pdf->Cell(18.8, 0.53, '2. '.$catatan21, 'LR', 1, 'L');
+    }
+
+   $pdf->SetFont('Arial','B',10);
+   $pdf->Cell(18.8, 0.6, 'C. '.$aspek[0], 1, 1, 'L');
+   $pdf->SetFont('Arial','',10);
+   $pdf->Cell(1.2, 0.53, '1', 'LBR', 0, 'C'); 
+   $qkriteria=mysqli_query($koneksi,"select * from kriteria_penilaian where id_aspek = '$id_aspek[0]'");
+   $i=0;
+   while($row=mysqli_fetch_array($qkriteria))
+   {
+	   $kriteria[$i] = $row['kriteria'];
+	   $i++;
+   } 
+   $pdf->Cell(9.1, 0.53, $kriteria[0], 'LBR', 0, 'L');
+   $pdf->SetX(11.3);
+   $val1 = ($nilai1_16 == '0' || $nilai1_16 == '') ? 'N/A' : $nilai1_16;
+   $val2 = ($nilai3_16 == '0' || $nilai3_16 == '') ? 'N/A' : $nilai3_16;
+   if ($status == 'APPROVED') {
+       if ($nilai4_16 > 0) { $val3 = $nilai4_16; }
+       elseif ($nilai3_16 > 0) { $val3 = $nilai3_16; }
+       elseif ($nilai2_16 > 0) { $val3 = $nilai2_16; }
+       else { $val3 = $nilai1_16; }
+   } else {
+       $val3 = 'N/A';
+   }
+   $val3 = ($val3 == '0' || $val3 == '') ? 'N/A' : $val3;
+   $pdf->Cell(2.1, 0.53, $val1, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, 0.53, $val2, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, 0.53, $val3, 'LBR', 0, 'C');
+   $pdf->Cell(2.2, 0.53, $akhir16, 'LBR', 1, 'C');
+   $txt = $kriteria[1];
+$h = ($pdf->GetStringWidth($txt) > 8.9) ? 1.06 : 0.53;
+$pdf->Cell(1.2, $h, '2', 'LBR', 0, 'C');
+$startX = $pdf->GetX();
+$startY = $pdf->GetY();
+if ($h == 1.06) {
+    $pdf->MultiCell(9.1, 0.53, $txt, 'LBR', 'L');
+    $pdf->SetXY($startX + 9.1, $startY);
+} else {
+    $pdf->Cell(9.1, $h, $txt, 'LBR', 0, 'L');
+}
+$pdf->SetX(11.3);
+   $val1 = ($nilai1_17 == '0' || $nilai1_17 == '') ? 'N/A' : $nilai1_17;
+   $val2 = ($nilai3_17 == '0' || $nilai3_17 == '') ? 'N/A' : $nilai3_17;
+   if ($status == 'APPROVED') {
+       if ($nilai4_17 > 0) { $val3 = $nilai4_17; }
+       elseif ($nilai3_17 > 0) { $val3 = $nilai3_17; }
+       elseif ($nilai2_17 > 0) { $val3 = $nilai2_17; }
+       else { $val3 = $nilai1_17; }
+   } else {
+       $val3 = 'N/A';
+   }
+   $val3 = ($val3 == '0' || $val3 == '') ? 'N/A' : $val3;
+   $pdf->Cell(2.1, $h, $val1, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val2, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val3, 'LBR', 0, 'C');
+   $pdf->Cell(2.2, $h, $akhir17, 'LBR', 1, 'C');
+   $txt = $kriteria[2];
+$h = ($pdf->GetStringWidth($txt) > 8.9) ? 1.06 : 0.53;
+$pdf->Cell(1.2, $h, '3', 'LBR', 0, 'C');
+$startX = $pdf->GetX();
+$startY = $pdf->GetY();
+if ($h == 1.06) {
+    $pdf->MultiCell(9.1, 0.53, $txt, 'LBR', 'L');
+    $pdf->SetXY($startX + 9.1, $startY);
+} else {
+    $pdf->Cell(9.1, $h, $txt, 'LBR', 0, 'L');
+}
+$pdf->SetX(11.3);
+   $val1 = ($nilai1_18 == '0' || $nilai1_18 == '') ? 'N/A' : $nilai1_18;
+   $val2 = ($nilai3_18 == '0' || $nilai3_18 == '') ? 'N/A' : $nilai3_18;
+   if ($status == 'APPROVED') {
+       if ($nilai4_18 > 0) { $val3 = $nilai4_18; }
+       elseif ($nilai3_18 > 0) { $val3 = $nilai3_18; }
+       elseif ($nilai2_18 > 0) { $val3 = $nilai2_18; }
+       else { $val3 = $nilai1_18; }
+   } else {
+       $val3 = 'N/A';
+   }
+   $val3 = ($val3 == '0' || $val3 == '') ? 'N/A' : $val3;
+   $pdf->Cell(2.1, $h, $val1, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val2, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, $h, $val3, 'LBR', 0, 'C');
+   $pdf->Cell(2.2, $h, $akhir18, 'LBR', 1, 'C');
+    $txt = $kriteria[3];
+$h = ($pdf->GetStringWidth($txt) > 8.9) ? 1.06 : 0.53;
+$pdf->Cell(1.2, $h, '4', 'LBR', 0, 'C');
+$startX = $pdf->GetX();
+$startY = $pdf->GetY();
+if ($h == 1.06) {
+    $pdf->MultiCell(9.1, 0.53, $txt, 'LBR', 'L');
+    $pdf->SetXY($startX + 9.1, $startY);
+} else {
+    $pdf->Cell(9.1, $h, $txt, 'LBR', 0, 'L');
+}
+$pdf->SetX(11.3);
    $val1 = ($nilai1_19 == '0' || $nilai1_19 == '') ? 'N/A' : $nilai1_19;
    $val2 = ($nilai3_19 == '0' || $nilai3_19 == '') ? 'N/A' : $nilai3_19;
    if ($status == 'APPROVED') {
@@ -311,7 +879,6 @@ if (isset($_GET['id']))
        $val3 = 'N/A';
    }
    $val3 = ($val3 == '0' || $val3 == '') ? 'N/A' : $val3;
-   
    $pdf->Cell(2.1, $h, $val1, 'LBR', 0, 'C');
    $pdf->Cell(2.1, $h, $val2, 'LBR', 0, 'C');
    $pdf->Cell(2.1, $h, $val3, 'LBR', 0, 'C');
@@ -328,23 +895,53 @@ if (isset($_GET['id']))
     }
 
    $pdf->Cell(10.3, 0.53, 'Total Nilai', 1, 0, 'C');
-   $pdf->Cell(1.7, 0.53, $total_nilai1, 1, 0, 'C');
-   $pdf->Cell(1.7, 0.53, $total_nilai2, 1, 0, 'C');
-   $pdf->Cell(1.7, 0.53, $total_nilai3, 1, 0, 'C');
-   $pdf->Cell(1.7, 0.53, $total_nilai4, 1, 0, 'C');
-   $pdf->Cell(1.7, 0.53, $total_akhir, 1, 1, 'C');
+   $val_tot1 = ($total_nilai1 == '0' || $total_nilai1 == '') ? 'N/A' : $total_nilai1;
+   $val_tot2 = ($total_nilai3 == '0' || $total_nilai3 == '') ? 'N/A' : $total_nilai3;
+   if ($status == 'APPROVED') {
+       if ($total_nilai4 > 0) { $val_tot3 = $total_nilai4; }
+       elseif ($total_nilai3 > 0) { $val_tot3 = $total_nilai3; }
+       elseif ($total_nilai2 > 0) { $val_tot3 = $total_nilai2; }
+       else { $val_tot3 = $total_nilai1; }
+   } else {
+       $val_tot3 = 'N/A';
+   }
+   $val_tot3 = ($val_tot3 == '0' || $val_tot3 == '') ? 'N/A' : $val_tot3;
+   $pdf->Cell(2.1, 0.53, $val_tot1, 1, 0, 'C');
+   $pdf->Cell(2.1, 0.53, $val_tot2, 1, 0, 'C');
+   $pdf->Cell(2.1, 0.53, $val_tot3, 1, 0, 'C');
+   $pdf->Cell(2.2, 0.53, $total_akhir, 1, 1, 'C');
    $pdf->Cell(10.3, 0.53, 'Rata - rata Nilai', 1, 0, 'C');
-   $pdf->Cell(1.7, 0.53, $rata_nilai1, 1, 0, 'C');
-   $pdf->Cell(1.7, 0.53, $rata_nilai2, 1, 0, 'C');
-   $pdf->Cell(1.7, 0.53, $rata_nilai3, 1, 0, 'C');
-   $pdf->Cell(1.7, 0.53, $rata_nilai4, 1, 0, 'C');
-   $pdf->Cell(1.7, 0.53, $rata_akhir, 1, 1, 'C');
+   $val_rata1 = ($rata_nilai1 == '0' || $rata_nilai1 == '') ? 'N/A' : $rata_nilai1;
+   $val_rata2 = ($rata_nilai3 == '0' || $rata_nilai3 == '') ? 'N/A' : $rata_nilai3;
+   if ($status == 'APPROVED') {
+       if ($rata_nilai4 > 0) { $val_rata3 = $rata_nilai4; }
+       elseif ($rata_nilai3 > 0) { $val_rata3 = $rata_nilai3; }
+       elseif ($rata_nilai2 > 0) { $val_rata3 = $rata_nilai2; }
+       else { $val_rata3 = $rata_nilai1; }
+   } else {
+       $val_rata3 = 'N/A';
+   }
+   $val_rata3 = ($val_rata3 == '0' || $val_rata3 == '') ? 'N/A' : $val_rata3;
+   $pdf->Cell(2.1, 0.53, $val_rata1, 1, 0, 'C');
+   $pdf->Cell(2.1, 0.53, $val_rata2, 1, 0, 'C');
+   $pdf->Cell(2.1, 0.53, $val_rata3, 1, 0, 'C');
+   $pdf->Cell(2.2, 0.53, $rata_akhir, 1, 1, 'C');
    $pdf->Cell(10.3, 0.53, 'Grade Nilai', 1, 0, 'C');
-   $pdf->Cell(1.7, 0.53, $grade_nilai1, 1, 0, 'C');
-   $pdf->Cell(1.7, 0.53, $grade_nilai2, 1, 0, 'C');
-   $pdf->Cell(1.7, 0.53, $grade_nilai3, 1, 0, 'C');
-   $pdf->Cell(1.7, 0.53, $grade_nilai4, 1, 0, 'C');
-   $pdf->Cell(1.7, 0.53, $grade_akhir, 1, 1, 'C');
+   $val_grade1 = ($grade_nilai1 == '') ? 'N/A' : $grade_nilai1;
+   $val_grade2 = ($grade_nilai3 == '') ? 'N/A' : $grade_nilai3;
+   if ($status == 'APPROVED') {
+       if ($grade_nilai4 != '') { $val_grade3 = $grade_nilai4; }
+       elseif ($grade_nilai3 != '') { $val_grade3 = $grade_nilai3; }
+       elseif ($grade_nilai2 != '') { $val_grade3 = $grade_nilai2; }
+       else { $val_grade3 = $grade_nilai1; }
+   } else {
+       $val_grade3 = 'N/A';
+   }
+   $val_grade3 = ($val_grade3 == '') ? 'N/A' : $val_grade3;
+   $pdf->Cell(2.1, 0.53, $val_grade1, 1, 0, 'C');
+   $pdf->Cell(2.1, 0.53, $val_grade2, 1, 0, 'C');
+   $pdf->Cell(2.1, 0.53, $val_grade3, 1, 0, 'C');
+   $pdf->Cell(2.2, 0.53, $grade_akhir, 1, 1, 'C');
 
    $pdf->Cell(18.8, 0.53, 'CATATAN TAMBAHAN :', 'LR', 1, 'L');
    if(!isset($catatan41) || $catatan41 == '')
