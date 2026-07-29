@@ -454,7 +454,13 @@ else
 								<table class="table table-bordered table-striped table-condensed" style="font-size:10px;">
 								  <thead>
 								    <tr class="info">
-									  <th><center><a href="#">FORM PENILAIAN</a></center></th>
+									  <th>
+                                          <center>
+                                              <a href="#">FORM PENILAIAN</a>
+                                              <br><br>
+                                              <a href="../sync_pdf.php?id=<?php echo $id; ?>" class="btn btn-warning btn-sm"><i class="fas fa-sync"></i> Generate Ulang PDF (Sinkronisasi Form)</a>
+                                          </center>
+                                      </th>
 									</tr>
 								  </thead>
 						          <tbody id="fbody">
