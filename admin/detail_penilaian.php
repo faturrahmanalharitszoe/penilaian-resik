@@ -415,8 +415,19 @@ else
 										   <td nowrap><center><?php echo $row['menyetujui']; ?></center></td>
 										   <?php
                                            if ($row['status'] == 'APPROVED') {
-										       $score_app_total = ($row['total_nilai4'] > 0) ? $row['total_nilai4'] : $row['total_nilai3'];
-										       $score_app_rata = ($row['rata_nilai4'] > 0) ? $row['rata_nilai4'] : $row['rata_nilai3'];
+										       if ($row['total_nilai4'] > 0) {
+                                                   $score_app_total = $row['total_nilai4'];
+                                                   $score_app_rata = $row['rata_nilai4'];
+                                               } elseif ($row['total_nilai3'] > 0) {
+                                                   $score_app_total = $row['total_nilai3'];
+                                                   $score_app_rata = $row['rata_nilai3'];
+                                               } elseif ($row['total_nilai2'] > 0) {
+                                                   $score_app_total = $row['total_nilai2'];
+                                                   $score_app_rata = $row['rata_nilai2'];
+                                               } else {
+                                                   $score_app_total = $row['total_nilai1'];
+                                                   $score_app_rata = $row['rata_nilai1'];
+                                               }
                                            } else {
                                                $score_app_total = "-";
                                                $score_app_rata = "-";

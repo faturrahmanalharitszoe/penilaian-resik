@@ -255,7 +255,10 @@ if (isset($_GET['id']))
    $val1 = ($nilai1_19 == '0' || $nilai1_19 == '') ? 'N/A' : $nilai1_19;
    $val2 = ($nilai3_19 == '0' || $nilai3_19 == '') ? 'N/A' : $nilai3_19;
    if ($status == 'APPROVED') {
-       $val3 = ($nilai4_19 > 0) ? $nilai4_19 : $nilai3_19;
+       if ($nilai4_19 > 0) { $val3 = $nilai4_19; }
+       elseif ($nilai3_19 > 0) { $val3 = $nilai3_19; }
+       elseif ($nilai2_19 > 0) { $val3 = $nilai2_19; }
+       else { $val3 = $nilai1_19; }
    } else {
        $val3 = 'N/A';
    }
