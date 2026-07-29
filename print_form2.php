@@ -90,6 +90,7 @@ if (isset($_GET['id']))
     $mengetahui_1 = $dnilai['mengetahui_1'];
     $mengetahui_2 = $dnilai['mengetahui_2'];
     $menyetujui = $dnilai['menyetujui'];
+   $status = $dnilai['status'];
 
     $qmengetahui = mysqli_query($koneksi,"select * from karyawan where nama = '$mengetahui_2'");
     $dmengetahui = mysqli_fetch_array($qmengetahui);
@@ -272,238 +273,20 @@ if (isset($_GET['id']))
     {
         $pdf->Cell(7.7, 0.6, ': '.$divisi, 0, 0, 'L');
     }
-    $pdf->SetX(11.5);
-    $pdf->Cell(2.3, 0.6, 'Masa Kerja', 0, 0, 'L');
-    $pdf->Cell(6.2, 0.6, ': '.$masakerja, 'R', 1, 'L');
-    $pdf->SetX(1);
-    $pdf->Cell(2.3, 0.6, 'Nama / NIK', 'L', 0, 'L');
-    $txt_nama = ': '.$karyawan.' / '.$nik;
-$x_nama = $pdf->GetX();
-$y_nama = $pdf->GetY();
-if ($pdf->GetStringWidth($txt_nama) > 7.6) {
-    $pdf->MultiCell(7.7, 0.3, $txt_nama, 0, 'L');
-    $pdf->SetXY($x_nama + 7.7, $y_nama);
-} else {
-    $pdf->Cell(7.7, 0.6, $txt_nama, 0, 0, 'L');
-}
-    $pdf->SetX(11.5);
-    $pdf->Cell(2.3, 0.6, 'Gol/Jabatan', 0, 0, 'L');
-    if($gol == '')
-    {
-        $pdf->Cell(6.2, 0.6, ': '.$jabatan, 'R', 1, 'L');
-    }
-    else
-    {
-   	    $pdf->Cell(6.2, 0.6, ': '.$gol.' / '.$jabatan, 'R', 1, 'L');
-    }
-    $pdf->Cell(2.3, 0.6, 'Pendidikan', 'L', 0, 'L');
-    $pdf->Cell(7.7, 0.6, ': '.$sekolah, 0, 0, 'L');
-    $pdf->SetX(11.5);
-    $pdf->Cell(2.3, 0.6, 'Periode', 0, 0, 'L');
-    $pdf->Cell(6.2, 0.6, ': '.$periode, 'R', 1, 'L');
-    $pdf->Cell(18.8, 0.1, '', 'LR', 1, 'L');
-    $pdf->Line(1,5.4,19.8,5.4);
-    $pdf->SetLineWidth(0);
-    $pdf->Line(1,5.47,19.8,5.47);
-    $pdf->SetLineWidth(0);
-    $pdf->SetFont('Arial','B',12);
-    $pdf->Cell(1.2, 1.2, 'NO', 'LBR', 0, 'C');
-    $pdf->Cell(9.3, 1.2, 'ASPEK PENILAIAN', 'LBR', 0, 'C');
-    $pdf->SetFont('Arial','',10);
-    $pdf->Cell(8.3, 0.6, 'SKOR PENILAIAN', 'LBR', 1, 'C');
-    $pdf->SetX(11.5);
-    $pdf->Cell(2.07, 0.6, 'NILAI I', 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.6, 'NILAI II', 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.6, 'NILAI III', 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.6, 'AKHIR', 'LBR', 1, 'C');
-    $pdf->Line(1,6.76,19.8,6.76);
-    $pdf->SetLineWidth(0);
-    $pdf->SetX(1);
-    $pdf->SetFont('Arial','B',10);
-    $pdf->Cell(18.8, 0.6, 'A. '.$aspek[1], 'LBR', 1, 'L');
-   $pdf->SetFont('Arial','',10);
-   $pdf->Cell(1.2, 0.53, '1', 'LBR', 0, 'C'); 
-   $qkriteria=mysqli_query($koneksi,"select * from kriteria_penilaian where id_aspek = '$id_aspek[1]'");
-   $i=0;
-   while($row=mysqli_fetch_array($qkriteria))
-   {
-	   $kriteria[$i] = $row['kriteria'];
-	   $i++;
+    $pdf->SetX(11.3);
+   $val1 = ($nilai1_19 == '0' || $nilai1_19 == '') ? 'N/A' : $nilai1_19;
+   $val2 = ($nilai3_19 == '0' || $nilai3_19 == '') ? 'N/A' : $nilai3_19;
+   if ($status == 'APPROVED') {
+       $val3 = ($nilai4_19 > 0) ? $nilai4_19 : $nilai3_19;
+   } else {
+       $val3 = 'N/A';
    }
-   $pdf->Cell(9.3, 0.53, $kriteria[0], 'LBR', 0, 'L');
-   $pdf->SetX(11.5);
-   $pdf->Cell(2.07, 0.53, $nilai1_1, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai2_1, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai3_1, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $akhir1, 'LBR', 1, 'C');
-   $pdf->Cell(1.2, 0.53, '2', 'LBR', 0, 'C'); 
-   $pdf->Cell(9.3, 0.53, $kriteria[1], 'LBR', 0, 'L');
-   $pdf->SetX(11.5);
-   $pdf->Cell(2.07, 0.53, $nilai1_2, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai2_2, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai3_2, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $akhir2, 'LBR', 1, 'C');
-   $pdf->Cell(1.2, 0.53, '3', 'LBR', 0, 'C'); 
-   $pdf->Cell(9.3, 0.53, $kriteria[2], 'LBR', 0, 'L');
-   $pdf->SetX(11.5);
-   $pdf->Cell(2.07, 0.53, $nilai1_3, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai2_3, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai3_3, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $akhir3, 'LBR', 1, 'C');
-   $pdf->Cell(1.2, 0.53, '4', 'LBR', 0, 'C'); 
-   $pdf->Cell(9.3, 0.53, $kriteria[3], 'LBR', 0, 'L');
-   $pdf->SetX(11.5);
-   $pdf->Cell(2.07, 0.53, $nilai1_4, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai2_4, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai3_4, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $akhir4, 'LBR', 1, 'C');
-   $pdf->Cell(1.2, 0.53, '5', 'LBR', 0, 'C'); 
-   $pdf->Cell(9.3, 0.53, $kriteria[4], 'LBR', 0, 'L');
-   $pdf->SetX(11.5);
-   $pdf->Cell(2.07, 0.53, $nilai1_5, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai2_5, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai3_5, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $akhir5, 'LBR', 1, 'C');
-   $pdf->Cell(1.2, 0.53, '6', 'LBR', 0, 'C'); 
-   $pdf->Cell(9.3, 0.53, $kriteria[5], 'LBR', 0, 'L');
-   $pdf->SetX(11.5);
-   $pdf->Cell(2.07, 0.53, $nilai1_6, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai2_6, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai3_6, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $akhir6, 'LBR', 1, 'C');
-   $pdf->Cell(1.2, 0.53, '7', 'LBR', 0, 'C'); 
-   $pdf->Cell(9.3, 0.53, $kriteria[6], 'LBR', 0, 'L');
-   $pdf->SetX(11.5);
-   $pdf->Cell(2.07, 0.53, $nilai1_7, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai2_7, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai3_7, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $akhir7, 'LBR', 1, 'C');
-   $pdf->Cell(1.2, 0.53, '8', 'LBR', 0, 'C');
-   $pdf->Cell(9.3, 0.53, $kriteria[7], 'LBR', 0, 'L');
-    $pdf->SetX(11.5);
-    $pdf->Cell(2.07, 0.53, $nilai1_8, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $nilai2_8, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $nilai3_8, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $akhir8, 'LBR', 1, 'C');
-   $pdf->Cell(18.8, 0.53, 'CATATAN :', 'LR', 1, 'L');
-    if($catatan11 == '')
-    {
-        $pdf->Cell(18.8, 0.53, $catatan1, 'LR', 1, 'L');
-    }
-    else
-    {
-        $pdf->Cell(18.8, 0.53, '1. '.$catatan1, 'LR', 1, 'L');
-        $pdf->Cell(18.8, 0.53, '2. '.$catatan11, 'LR', 1, 'L');
-    }
-
-    $pdf->SetFont('Arial','B',10);
-    $pdf->Cell(18.8, 0.6, 'B. '.$aspek[2], 1, 1, 'L');
-    $pdf->SetFont('Arial','',10);
-    $pdf->Cell(1.2, 0.53, '1', 'LBR', 0, 'C');
-    $qkriteria=mysqli_query($koneksi,"select * from kriteria_penilaian where id_aspek = '$id_aspek[2]'");
-    $i=0;
-    while($row=mysqli_fetch_array($qkriteria))
-    {
-        $kriteria[$i] = $row['kriteria'];
-        $i++;
-    }
-    $pdf->Cell(9.3, 0.53, $kriteria[0], 'LBR', 0, 'L');
-    $pdf->SetX(11.5);
-    $pdf->Cell(2.07, 0.53, $nilai1_9, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $nilai2_9, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $nilai3_9, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $akhir9, 'LBR', 1, 'C');
-    $pdf->Cell(1.2, 0.53, '2', 'LBR', 0, 'C'); 
-    $pdf->Cell(9.3, 0.53, $kriteria[1], 'LBR', 0, 'L');
-    $pdf->SetX(11.5);
-    $pdf->Cell(2.07, 0.53, $nilai1_10, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $nilai2_10, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $nilai3_10, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $akhir10, 'LBR', 1, 'C');
-    $pdf->Cell(1.2, 0.53, '3', 'LBR', 0, 'C'); 
-    $pdf->Cell(9.3, 0.53, $kriteria[2], 'LBR', 0, 'L');
-    $pdf->SetX(11.5);
-    $pdf->Cell(2.07, 0.53, $nilai1_11, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $nilai2_11, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $nilai3_11, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $akhir11, 'LBR', 1, 'C');
-    $pdf->Cell(1.2, 0.53, '4', 'LBR', 0, 'C'); 
-    $pdf->Cell(9.3, 0.53, $kriteria[3], 'LBR', 0, 'L');
-    $pdf->SetX(11.5);
-    $pdf->Cell(2.07, 0.53, $nilai1_12, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $nilai2_12, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $nilai3_12, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $akhir12, 'LBR', 1, 'C');
-    $pdf->Cell(1.2, 0.53, '5', 'LBR', 0, 'C'); 
-    $pdf->Cell(9.3, 0.53, $kriteria[4], 'LBR', 0, 'L');
-   $pdf->SetX(11.5);
-   $pdf->Cell(2.07, 0.53, $nilai1_13, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai2_13, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai3_13, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $akhir13, 'LBR', 1, 'C');
-   $pdf->Cell(1.2, 0.53, '6', 'LBR', 0, 'C'); 
-   $pdf->Cell(9.3, 0.53, $kriteria[5], 'LBR', 0, 'L');
-   $pdf->SetX(11.5);
-   $pdf->Cell(2.07, 0.53, $nilai1_14, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai2_14, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai3_14, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $akhir14, 'LBR', 1, 'C');
-   $pdf->Cell(1.2, 0.53, '7', 'LBR', 0, 'C'); 
-   $pdf->Cell(9.3, 0.53, $kriteria[6], 'LBR', 0, 'L');
-   $pdf->SetX(11.5);
-   $pdf->Cell(2.07, 0.53, $nilai1_15, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai2_15, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai3_15, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $akhir15, 'LBR', 1, 'C');
-   $pdf->Cell(18.8, 0.53, 'CATATAN :', 'LR', 1, 'L');
-    if($catatan21 == '')
-    {
-        $pdf->Cell(18.8, 0.53, $catatan2, 'LR', 1, 'L');
-    }
-    else
-    {
-        $pdf->Cell(18.8, 0.53, '1. '.$catatan2, 'LR', 1, 'L');
-        $pdf->Cell(18.8, 0.53, '2. '.$catatan21, 'LR', 1, 'L');
-    }
-    $pdf->SetFont('Arial','B',10);
-    $pdf->Cell(18.8, 0.6, 'C. '.$aspek[0], 1, 1, 'L');
-
-    $pdf->SetFont('Arial','',10);
-    $pdf->Cell(1.2, 0.53, '1', 'LBR', 0, 'C');
-    $qkriteria=mysqli_query($koneksi,"select * from kriteria_penilaian where id_aspek = '$id_aspek[0]'");
-   $i=0;
-   while($row=mysqli_fetch_array($qkriteria))
-   {
-	   $kriteria[$i] = $row['kriteria'];
-	   $i++;
-   } 
-   $pdf->Cell(9.3, 0.53, $kriteria[0], 'LBR', 0, 'L');
-   $pdf->SetX(11.5);
-   $pdf->Cell(2.07, 0.53, $nilai1_16, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai2_16, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai3_16, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $akhir16, 'LBR', 1, 'C');
-   $pdf->Cell(1.2, 0.53, '2', 'LBR', 0, 'C'); 
-   $pdf->Cell(9.3, 0.53, $kriteria[1], 'LBR', 0, 'L');
-   $pdf->SetX(11.5);
-   $pdf->Cell(2.07, 0.53, $nilai1_17, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai2_17, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai3_17, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $akhir17, 'LBR', 1, 'C');
-   $pdf->Cell(1.2, 0.53, '3', 'LBR', 0, 'C');
-   $pdf->Cell(9.3, 0.53, $kriteria[2], 'LBR', 0, 'L');
-   $pdf->SetX(11.5);
-   $pdf->Cell(2.07, 0.53, $nilai1_18, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai2_18, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai3_18, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $akhir18, 'LBR', 1, 'C');
-   $pdf->Cell(1.2, 0.53, '4', 'LBR', 0, 'C'); 
-   $pdf->Cell(9.3, 0.53, $kriteria[3], 'LBR', 0, 'L');
-   $pdf->SetX(11.5);
-   $pdf->Cell(2.07, 0.53, $nilai1_19, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai2_19, 'LBR', 0, 'C');
-   $pdf->Cell(2.07, 0.53, $nilai3_19, 'LBR', 0, 'C');
-    $pdf->Cell(2.07, 0.53, $akhir19, 'LBR', 1, 'C');
+   $val3 = ($val3 == '0' || $val3 == '') ? 'N/A' : $val3;
+   
+   $pdf->Cell(2.1, 0.53, $val1, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, 0.53, $val2, 'LBR', 0, 'C');
+   $pdf->Cell(2.1, 0.53, $val3, 'LBR', 0, 'C');
+   $pdf->Cell(2.2, 0.53, $akhir19, 'LBR', 1, 'C');
    $pdf->Cell(18.8, 0.53, 'CATATAN :', 'LR', 1, 'L');
     if($catatan31 == '')
     {
