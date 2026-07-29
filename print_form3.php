@@ -91,6 +91,7 @@ if (isset($_GET['id']))
    $mengetahui_1 = $dnilai['mengetahui_1'];
    $mengetahui_2 = $dnilai['mengetahui_2'];
    $menyetujui = $dnilai['menyetujui'];
+   $status = $dnilai['status'];
 
    $qmengetahui = mysqli_query($koneksi,"select * from karyawan where nama = '$mengetahui_2'");
    $dmengetahui = mysqli_fetch_array($qmengetahui);

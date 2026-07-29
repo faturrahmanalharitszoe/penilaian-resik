@@ -92,6 +92,7 @@ if (isset($_GET['lid']))
    $mengetahui_1 = $dnilai['mengetahui_1'];
    $nama_mengetahui = $dnilai['mengetahui_2'];
    $menyetujui = $dnilai['menyetujui'];
+   $status = $dnilai['status'];
    
    $qemail = mysqli_query($koneksi,"select * from karyawan where nama = '$penilai'");
    $demail = mysqli_fetch_array($qemail);
