@@ -90,7 +90,8 @@ if (isset($_GET['lid']))
    $jabatan = $dnilai['jabatan'];
    $penilai = $dnilai['penilai'];
    $mengetahui_1 = $dnilai['mengetahui_1'];
-   $nama_mengetahui = $dnilai['mengetahui_2'];
+   $mengetahui_2 = $dnilai['mengetahui_2'];
+   $nama_mengetahui = $mengetahui_2;
    $menyetujui = $dnilai['menyetujui'];
    $status = $dnilai['status'];
    
